@@ -96,7 +96,16 @@ public class Banking {
 	 * @param newPassword 새 비밀번호
 	 */
 	void changePassword(int accNo, int oldPassword, int newPassword) {
-		
+		for(Account x : accounts) {
+			if(x.no == accNo) {
+				if(x.password == oldPassword) {
+					x.password = newPassword;
+					break;
+				} else {
+					
+				}
+			}
+		}
 	}
 	
 	/**
@@ -105,7 +114,12 @@ public class Banking {
 	 * @param amount 입금액
 	 */
 	void deposit(int accNo, long amount) {
-		
+		for(Account x : accounts) {
+			if(x.no == accNo) {
+				x.balance = amount;
+				break;
+			}
+		}
 	}
 	
 	/**
