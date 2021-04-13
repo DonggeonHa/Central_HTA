@@ -26,10 +26,10 @@ public class App {
 			System.out.print("국어 점수 : ");
 			int kor = sc.nextInt();
 			
-			System.out.print("국어 점수 : ");
+			System.out.print("영어 점수 : ");
 			int eng = sc.nextInt();
 			
-			System.out.print("국어 점수 : ");
+			System.out.print("수학 점수 : ");
 			int math = sc.nextInt();
 			
 			Student s = new Student(name, kor, eng, math);
@@ -37,9 +37,10 @@ public class App {
 		}
 		
 		for (Student s : students) {
-			System.out.println("이름 : " + s.getName() + ", 국어 : " + s.getKor() + ", 영어 : " + s.getEng() + ", 수학 : " + s.getMath());
+			System.out.println(s.toString());
+			// System.out.println("이름 : " + s.getName() + ", 국어 : " + s.getKor() + ", 영어 : " + s.getEng() + ", 수학 : " + s.getMath());
 		}
 		
-		
+		sc.close();
 	}
 }
