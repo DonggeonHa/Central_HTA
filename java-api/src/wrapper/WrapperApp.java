@@ -20,6 +20,14 @@ public class WrapperApp {
 		Integer a1 = 100;	// Integer a = new Integer(100);
 		Double a2 = 3.14;	// Double a2 = new Double(3.14);
 		Boolean a3 = true;	// Boolean a3 = new Boolean(true);
+		
+		// 오토언박싱(Auto-unBoxing) 변수의 타입이 기본자료형 타입일 때
+		// Wrapper 타입의 객체에서 기본자료형값만 가져오는 것
+		int x1 = a1;	// a1의 Wrapper객체에 대한 참조변수다.
+						// a1이 참조하는 Wrapper객체에 저장된 값만 가져와서 
+						// 변수 x1에 대입된다.
+		
+		double x2 = a2;
+		boolean x3 = a3;
 	}
-	
 }
