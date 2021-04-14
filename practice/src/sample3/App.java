@@ -55,6 +55,8 @@ public class App {
 				
 				System.out.print("카테고리를 입력하세요 : ");
 				String cate = sc.next();
+				
+				
 				for (Product p : products) {
 					if (p == null) {
 						break;
