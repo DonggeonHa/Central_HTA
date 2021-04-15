@@ -90,10 +90,12 @@ public class App {
 			int menuNo = sc.nextInt();
 			
 			if (menuNo == 1) {
+				System.out.println("[전체 상품 조회]");
 				for (Product product : products) {
 					App.printProduct(product);
 				}
 			} else if(menuNo == 2) {
+				System.out.println("[상품 구매]");
 				System.out.print("구매할 상품번호를 입력하세요 : ");
 				int productNo = sc.nextInt();
 				System.out.print("구매할 상품의 수량을 입력하세요 : ");
