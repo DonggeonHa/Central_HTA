@@ -28,6 +28,17 @@ public class Order {
 	public void setAmount(int amount) {
 		this.amount = amount;
 	}
+
+	public int getOrderPrice() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public int getSavedPoint() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
 	
 	
 }
