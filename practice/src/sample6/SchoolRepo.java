@@ -55,23 +55,43 @@ public class SchoolRepo {
 	// 학생번호, 과정번호를 전달받아서 registrations가 참조하는 ArrayList객체에 저장하는 기능
 	// * 이미 신청한 과목은 신청할 수 없음
 	// * 정원이 부족하면 신청할 수 없음
+	// * 신청자수를 1증가시킨다.
 	public void addRegistration(int studentNo, int courseNo) {
-		// 1. 학생번호에 해당하는 학생이 그 과정을 신청했는지 확인하기
-		// 2. 그 과정에 정원이 충분한지 확인하기
-		// 3. registrations가 참조하는 ArrayList에 등록정보 추가하기
-		// 4. 해당 과정의 신청자수를 1 증가시키기
-		for (Student student : students) {
-			if (studentNo == student.getStudentNo()) {
-				
+		// 이미 신청한 과정이면 메소드 실행을 중단
+		// 정원이 다 채워졌으면 메소드 실행을 중단
+		for (Registration reg : registrations) {
+			if (reg.getStudNo() == studentNo && reg.getCourseNo() == courseNo) {
+				System.out.println("[안내] 해당 과정은 이미 수강신청한 과정입니다.");
+				return; // 메소드 실행 즉시 중단.
 			}
 		}
 		
+		Course foundCourse = null;
+		for (Course course : courses) {
+			if (course.getCourseNo() == courseNo) {
+				foundCourse = course; // 과정번호에 해당하는 과정을 found
+				break; // 반복 탈출
+			}
+		}
+		
+		if (foundCourse.getQuota() == foundCourse.getRegisteredCount()) {
+			System.out.println("[안내] 해당 과정은 모집정원이 다 채워졌습니다.");
+			return; // 메소드 실행 즉시 중단.
+		}
+		
+		// 수강신청정보 생성, 학번, 과정번호 저장
+		// 새 수강신청정보 ArrayList에 저장
+		
+		// 해당과정의 신청자수 1 증가
+		foundCourse.setRegisteredCount(foundCourse.getRegisteredCount() + 1);
 	}
 	
 	// 신청 취소 기능
 	// 학생번호, 과정번호를 전달받아서 registrations가 참조하는 ArrayList객체에서 해당 과정을 삭제
 	public void cancelRegistration(int studentNo, int coureseNo) {
 		
+		// registrations에서 Registration 객체 삭제
+		// Iterator를 이용해야 함.
 	}
 	// 나의 수강신청과정 조회하기
 	// 학번을 전달받아서 그 학생이 수강신청한 과정을 출력하는 기능
