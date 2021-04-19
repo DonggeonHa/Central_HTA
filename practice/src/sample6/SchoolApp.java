@@ -32,10 +32,19 @@ public class SchoolApp {
 				
 			} else if (menuNo == 3) {
 				System.out.println("[신청 철회]");
+				System.out.print("학생 번호를 입력해주세요 : ");
+				int studentNo = scanner.nextInt();
+				System.out.print("신청 철회할 과정번호를 입력해주세요 : ");
+				int courseNo = scanner.nextInt();
+				
+				repo.cancelRegistration(studentNo, courseNo);
 				
 			} else if (menuNo == 4) {
 				System.out.println("[수강신청 내역]");
+				System.out.print("학생 번호를 입력해주세요 : ");
+				int studentNo = scanner.nextInt();
 				
+				repo.displayAllRegistrations(studentNo);
 			} else if (menuNo == 0) {
 				System.out.println("[프로그램 종료]");
 				break;
