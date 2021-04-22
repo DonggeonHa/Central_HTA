@@ -1,6 +1,6 @@
 package day1;
 
-public class Student {
+public class Student implements Comparable<Student> {
 
 	private String name;
 	private int kor;
@@ -35,6 +35,11 @@ public class Student {
 	}
 	public int getAverage() {
 		return average;
+	}
+	
+	@Override
+	public int compareTo(Student other) {
+		return this.total - other.total;
 	}
 	
 	
