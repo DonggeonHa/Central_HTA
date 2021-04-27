@@ -1,5 +1,6 @@
 package app;
 
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -63,6 +64,9 @@ public class BookApp {
 					exit();
 				}
 			}
+		} catch (InputMismatchException ime) {
+			scanner = new Scanner(System.in);
+			System.out.println("[오류] 잘못입력하셨습니다. 정수만 입력 가능합니다.");
 		} catch (BookStoreException e) {
 			System.out.println("[오류] " + e.getMessage());
 		} catch (Exception e) {
