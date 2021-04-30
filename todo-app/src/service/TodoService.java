@@ -1,9 +1,13 @@
 package service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import dao.TodoDao;
 import dao.UserDao;
+import exception.TodoException;
+import utils.StringUtils;
 import vo.Todo;
 import vo.User;
 
@@ -22,6 +26,11 @@ public class TodoService {
 		// 2. 사용자정보가 존재하면 TodoException 발생 - 이미 사용중인 아이디 입니다.
 		// 3. User객체에 현재 날짜와 시간정보를 저장한다. 
 		// 4. UserDao객체의 insertUser메소드를 실행해서 사용자정보를 저장시킨다.
+		if (userDao.getUserById(user.getId()) != null) {
+			throw new TodoException("이미 사용중인 아이디 입니다.");
+		}
+		
+		userDao.insertUser(user);
 	}
 	
 	/**
@@ -35,6 +44,19 @@ public class TodoService {
 		// 3. 탈퇴한 사용자면 TodoException 발생 - 탈퇴처리된 사용자입니다.
 		// 3. 비밀번호가 일치하지 않으면 TodoException 발생 - 아이디 혹은 비밀번호가 올바르지 않습니다.
 		// 4. 조회된 사용자정보를 loginedUser에 저장
+		if (userDao.getUserById(id) == null) {
+			throw new TodoException("아이디 혹은 비밀번호가 올바르지 않습니다.");
+		}
+		
+		if (userDao.getUserById(id).isDisabled()) {
+			throw new TodoException("탈퇴처리된 사용자 입니다.");
+		}
+		
+		if (!userDao.getUserById(id).getPassword().equals(password)) {
+			throw new TodoException("아이디 혹은 비밀번호가 올바르지 않습니다.");
+		}
+		
+		loginedUser = userDao.getUserById(id);
 	}
 	
 	/**
@@ -42,6 +64,7 @@ public class TodoService {
 	 */
 	public void 로그아웃서비스() {
 		// 1. loginedUser를 null로 초기화 시킨다.
+		loginedUser = null;
 	}
 	
 	/**
@@ -155,7 +178,8 @@ public class TodoService {
 	public void 프로그램시작서비스() {
 		// 1. UserDao 객체의 loadData()를 실행해서 사용자정보를 db에 저장시킨다.
 		// 2. TodoDao 객체의 loadData()를 실행해서 Todo정보를 db에 저장시킨다.
-		
+		userDao.loadData();
+		todoDao.loadData();
 	}
 	
 	/**
@@ -164,6 +188,8 @@ public class TodoService {
 	public void 프로그램종료서비스() {
 		// 1. UserDao 객체의 saveData()를 실행해서 db에 저장된 사용자정보를 파일로 기록하게 한다.
 		// 2. TodoDao 객체의 saveData()를 실행해서 db에 저장된 사용자정보를 파일로 기록하게 한다.
+		userDao.saveData();
+		todoDao.saveData();
 		
 	}
 }

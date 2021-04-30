@@ -12,6 +12,16 @@ public class User {
 	private Date deletedDate;
 	
 	public User() {}
+	
+	public User(String id, String password, String username, boolean isDisabled, Date createdDate, Date deletedDate) {
+		super();
+		this.id = id;
+		this.password = password;
+		this.username = username;
+		this.isDisabled = isDisabled;
+		this.createdDate = createdDate;
+		this.deletedDate = deletedDate;
+	}
 
 	public String getId() {
 		return id;

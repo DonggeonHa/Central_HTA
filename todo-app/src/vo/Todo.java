@@ -24,6 +24,20 @@ public class Todo {
 	public Todo() {
 		this.no = StringUtils.getSequence();
 	}
+	
+	public Todo(int no, String title, String writer, Date day, String status, String text, Date createdDate,
+			Date completedDate, Date deletedDate) {
+		super();
+		this.no = no;
+		this.title = title;
+		this.writer = writer;
+		this.day = day;
+		this.status = status;
+		this.text = text;
+		this.createdDate = createdDate;
+		this.completedDate = completedDate;
+		this.deletedDate = deletedDate;
+	}
 
 	public int getNo() {
 		return no;

@@ -1,9 +1,13 @@
 package app;
 
 import service.TodoService;
+import utils.StringUtils;
+import vo.User;
+
 import static utils.KeyboardUtils.readInt;
 import static utils.KeyboardUtils.readString;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import static utils.KeyboardUtils.readDate;
@@ -91,17 +95,44 @@ public class TodoApp {
 	
 	// 로그아웃 서비스를 실행한다.
 	private void 로그아웃() {
-		
+		service.로그아웃서비스();
 	}
 	
 	// 아이디, 비밀번호, 사용자명을 입력받아서 회원가입 서비스를 실행한다.
 	private void 회원가입() {
+		System.out.println("[회원가입]");
 		
+		System.out.print("아이디를 입력하세요: ");
+		String userId = readString();
+		
+		System.out.print("비밀번호를 입력하세요: ");
+		String password = readString();
+		
+		System.out.print("이름을 입력하세요 : ");
+		String name = readString();
+		
+		User user = new User();
+		user.setId(userId);
+		user.setPassword(password);
+		user.setUsername(name);
+		user.setDisabled(false);
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		String date = dateFormat.format(new Date());
+		System.out.println(date);
+		user.setCreatedDate(StringUtils.stringToDate(date));
+		System.out.println(user.getCreatedDate());
+		user.setDeletedDate(null);
+		
+		service.회원가입서비스(user);
+		
+		System.out.println("[회원가입]이 완료되었습니다.");
 	}
 	
 	// 종료 서비스를 실행한다.
 	private void 종료() {
-		
+		System.out.println("[종료]");
+		service.프로그램종료서비스();
+		System.exit(0);
 	}
 	
 	// 나의모든일정조회서비스를 실행한다.
