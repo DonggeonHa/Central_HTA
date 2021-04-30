@@ -3,13 +3,12 @@ package utils;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import exception.TodoException;
 
 public class KeyboardUtils {
 
-	private static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 	private static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 	
 	/**
@@ -73,14 +72,28 @@ public class KeyboardUtils {
 	}
 	
 	/**
-	 * 키보드 입력을 읽어서 Date로 반환한다.
-	 * @return 날짜
+	 * 키보드 입력을 읽어서 Date로 반환한다.<br />
+	 * 입력예: 2021-04-30
+	 * @return 날짜 정보를 포함하고 있는 Date객체(시간은 0시 0분 0초다.)
 	 */
 	public static Date readDate() {
 		try {
-			return dateFormat.parse(reader.readLine());
-		} catch (IOException | ParseException e) {
-			throw new RuntimeException(e);
+			return StringUtils.stringToDate(reader.readLine());
+		} catch (IOException e) {
+			throw new TodoException("키보드입력값을 읽어올 수 없습니다.");
+		}
+	}
+	
+	/**
+	 * 키보드 입력을 읽어서 Date로 반환한다.
+	 * 입력예: 2021-04-30 13:23:50
+	 * @return 날짜와 시간정보를 포함하고 있는 Date객체
+	 */
+	public static Date readDateTime() {
+		try {
+			return StringUtils.stringToDateTime(reader.readLine());
+		} catch (IOException e) {
+			throw new TodoException("키보드입력값을 읽어올 수 없습니다.");
 		}
 	}
 	

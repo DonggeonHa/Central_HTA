@@ -2,6 +2,8 @@ package vo;
 
 import java.util.Date;
 
+import utils.StringUtils;
+
 public class Todo {
 	
 	// 일정 상태값
@@ -11,14 +13,17 @@ public class Todo {
 	
 	private int no;
 	private String title;
-	private User writer;
+	private String writer;
+	private Date day;
 	private String status;
 	private String text;
 	private Date createdDate;
 	private Date completedDate;
 	private Date deletedDate;
 	
-	public Todo() {}
+	public Todo() {
+		this.no = StringUtils.getSequence();
+	}
 
 	public int getNo() {
 		return no;
@@ -36,11 +41,11 @@ public class Todo {
 		this.title = title;
 	}
 
-	public User getWriter() {
+	public String getWriter() {
 		return writer;
 	}
 
-	public void setWriter(User writer) {
+	public void setWriter(String writer) {
 		this.writer = writer;
 	}
 
@@ -82,6 +87,14 @@ public class Todo {
 
 	public void setDeletedDate(Date deletedDate) {
 		this.deletedDate = deletedDate;
+	}
+	
+	public Date getDay() {
+		return day;
+	}
+	
+	public void setDay(Date day) {
+		this.day = day;
 	}
 
 	@Override

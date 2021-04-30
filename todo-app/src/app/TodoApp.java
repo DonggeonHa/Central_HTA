@@ -3,17 +3,21 @@ package app;
 import service.TodoService;
 import static utils.KeyboardUtils.readInt;
 import static utils.KeyboardUtils.readString;
+
+import java.util.Date;
+
 import static utils.KeyboardUtils.readDate;
+import static utils.KeyboardUtils.readDateTime;
 
 import exception.TodoException;
 
 public class TodoApp {
 
-	public TodoApp() {
-	      service.프로그램시작서비스();
-	   }
-	
 	private TodoService service = new TodoService();
+	
+	public TodoApp() {
+		service.프로그램시작서비스();
+	}
 	
 	public void menu() {
 		try {
@@ -73,7 +77,16 @@ public class TodoApp {
 	
 	// 아이디와 비밀번호를 입력받아서 로그인 서비스를 실행한다.
 	private void 로그인() {
+		System.out.println("[로그인]");
 		
+		System.out.print("아이디를 입력하세요: ");
+		String userId = readString();
+		
+		System.out.print("비밀번호를 입력하세요: ");
+		String password = readString();
+		
+		service.로그인서비스(userId, password);
+		System.out.println("[안내] 로그인이 완료되었습니다.");
 	}
 	
 	// 로그아웃 서비스를 실행한다.
@@ -96,9 +109,16 @@ public class TodoApp {
 		
 	}
 	
-	// 일정제목, 내용을 입력받아서 새일정추가서비스를 실행한다.
+	// 일정제목, 내용, 예정일을 입력받아서 새일정추가서비스를 실행한다.
 	private void 일정추가() {
+		System.out.println("[새 일정 추가]");
 		
+		System.out.print("일정 제목을 입력하세요: ");
+		String title = readString();
+		System.out.print("일정 내용을 입력하세요: ");
+		String text = readString();
+		System.out.print("일정 실행일을 입력하세요(2021-04-30): ");
+		Date day = readDate();
 	} 
 	
 	// 변경할 일정번호, 제목, 내용을 입력받아서 일정변경서비스를 실행한다.

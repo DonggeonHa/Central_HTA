@@ -30,7 +30,7 @@ public class UserDao {
 	 * @param id userId
 	 * @return User 정보
 	 */
-	public User getUserById(int no) {
+	public User getUserById(String id) {
 		return null;
 	}
 	
