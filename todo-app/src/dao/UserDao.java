@@ -59,8 +59,8 @@ public class UserDao {
 				String password = items[1];
 				String username = items[2];
 				Boolean isDisabled = StringUtils.stringToBoolean(items[3]);
-				Date createdDate = StringUtils.stringToDate(items[4]);
-				Date deletedDate = StringUtils.stringToDate(items[5]);
+				Date createdDate = StringUtils.stringToDateTime(items[4]);
+				Date deletedDate = StringUtils.stringToDateTime(items[5]);
 				
 				User user = new User(id, password, username, isDisabled, createdDate, deletedDate);
 				
@@ -87,9 +87,9 @@ public class UserDao {
 					.append(",")
 					.append(user.isDisabled())
 					.append(",")
-					.append(user.getCreatedDate())
+					.append(StringUtils.dateTimeToString(user.getCreatedDate()))
 					.append(",")
-					.append(user.getDeletedDate());
+					.append(StringUtils.dateTimeToString(user.getDeletedDate()));
 				
 				String text = sb.toString();
 				

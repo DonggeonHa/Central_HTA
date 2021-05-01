@@ -113,8 +113,8 @@ public class Todo {
 
 	@Override
 	public String toString() {
-		return "Todo [no=" + no + ", title=" + title + ", writer=" + writer + ", status=" + status + ", text=" + text
-				+ ", createdDate=" + createdDate + ", completedDate=" + completedDate + ", deletedDate=" + deletedDate
+		return "Todo [no=" + no + ", title=" + title + ", writer=" + writer + ", day=" + StringUtils.dateTimeToString(day) +", status=" + status + ", text=" + text
+				+ ", createdDate=" + StringUtils.dateTimeToString(createdDate) + ", completedDate=" + StringUtils.dateTimeToString(completedDate) + ", deletedDate=" + StringUtils.dateTimeToString(deletedDate)
 				+ "]";
 	}
 	

@@ -20,7 +20,7 @@ public class TodoDao {
 	 * @param todo 새 Todo
 	 */
 	public void insertTodo(Todo todo) {
-		
+		db.add(todo);
 	}
 	
 	/**
@@ -37,6 +37,12 @@ public class TodoDao {
 	 * @return Todo정보
 	 */
 	public Todo getTodoByNo(int no) {
+		for (Todo todo : db) {
+			if (todo.getNo() == no) {
+				return todo;
+			}
+		}
+		
 		return null;
 	}
 	
@@ -53,12 +59,12 @@ public class TodoDao {
 				int no = StringUtils.stringToInt(items[0]);
 				String title = items[1];
 				String writer = items[2];
-				Date day = StringUtils.stringToDate(items[3]);
+				Date day = StringUtils.stringToDateTime(items[3]);
 				String status = items[4];
 				String text = items[5];
-				Date createDate = StringUtils.stringToDate(items[6]);
-				Date completedDate = StringUtils.stringToDate(items[7]);
-				Date deletedDate = StringUtils.stringToDate(items[8]);
+				Date createDate = StringUtils.stringToDateTime(items[6]);
+				Date completedDate = StringUtils.stringToDateTime(items[7]);
+				Date deletedDate = StringUtils.stringToDateTime(items[8]);
 				
 				Todo todo = new Todo(no, title, writer, day, status, text, createDate, completedDate, deletedDate);
 				
@@ -83,17 +89,17 @@ public class TodoDao {
 					.append(",")
 					.append(todo.getWriter())
 					.append(",")
-					.append(todo.getDay())
+					.append(StringUtils.dateTimeToString(todo.getDay()))
 					.append(",")
 					.append(todo.getStatus())
 					.append(",")
 					.append(todo.getText())
 					.append(",")
-					.append(todo.getCreatedDate())
+					.append(StringUtils.dateTimeToString(todo.getCreatedDate()))
 					.append(",")
-					.append(todo.getCompletedDate())
+					.append(StringUtils.dateTimeToString(todo.getCompletedDate()))
 					.append(",")
-					.append(todo.getDeletedDate());
+					.append(StringUtils.dateTimeToString(todo.getDeletedDate()));
 				
 				String text = sb.toString();
 				

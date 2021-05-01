@@ -1,13 +1,12 @@
 package service;
 
-import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import dao.TodoDao;
 import dao.UserDao;
 import exception.TodoException;
-import utils.StringUtils;
 import vo.Todo;
 import vo.User;
 
@@ -80,10 +79,19 @@ public class TodoService {
 	 * @param oldPassword 이전 비밀번호
 	 * @param password 새 비밀번호
 	 */
-	public void 비밀번호변경서비스(String oldPassword, String password) {
+	public void 비밀번호변경서비스(String oldPassword, String newPassword) {
 		// 1. 로그인여부제공서비스()를 실행해서 로그인되어 있지 않으면 TodoException 발생 - 로그인 후 사용가능한 서비스입니다.
 		// 2. loginedUser의 비밀번호와 비밀번호가 일치하지 않으면 TodoException 발생 - 아이디 혹은 비밀번호가 올바르지 않습니다.
 		// 3. 새 비밀번호로 loginedUser의 비밀번호 변경
+		if (!this.로그인여부제공서비스()) {
+			throw new TodoException("로그인 후 사용가능한 서비스입니다.");
+		}
+		
+		if (!loginedUser.getPassword().equals(oldPassword)) {
+			throw new TodoException("비밀번호가 올바르지 않습니다.");
+		}
+		
+		loginedUser.setPassword(newPassword);
 	}
 	
 	/**
@@ -94,6 +102,17 @@ public class TodoService {
 		// 2. loginedUser의 비밀번호와 비밀번호가 일치하지 않으면 TodoException 발생 - 아이디 혹은 비밀번호가 올바르지 않습니다.
 		// 3. loginedUser의 isDiabled를 true로 변경
 		// 4. loginedUser의 deletedDate에 현재 날짜와 시간정보추가
+		if (!this.로그인여부제공서비스()) {
+			throw new TodoException("로그인 후 사용가능한 서비스입니다.");
+		}
+		
+		if (!loginedUser.getPassword().equals(password)) {
+			throw new TodoException("아이디 혹은 비밀번호가 올바르지 않습니다.");
+		}
+		
+		loginedUser.setDisabled(true);
+		loginedUser.setDeletedDate(new Date());
+		
 	}
 	
 	/**
@@ -106,6 +125,17 @@ public class TodoService {
 		// 3. Todo객체의 작성자에 현재 로그인된 사용자의 아이디를 설정한다.
 		// 3. Todo객체의 createdDate에 현재 날짜와 시간정보 설정
 		// 4. TodoDao객체의 insertTodo를 실행시켜서 저장시킨다.
+		if (!this.로그인여부제공서비스()) {
+			throw new TodoException("로그인 후 사용가능한 서비스입니다.");
+		}
+		
+		todo.setStatus(todo.TODO_STATUS_ADDED);
+		todo.setWriter(loginedUser.getId());
+		todo.setCreatedDate(new Date());
+		todo.setCompletedDate(null);
+		todo.setDeletedDate(null);
+		
+		todoDao.insertTodo(todo);
 	}
 	
 	/**
@@ -116,7 +146,19 @@ public class TodoService {
 		// 1. 로그인여부제공서비스()를 실행해서 로그인되어 있지 않으면 TodoException 발생 - 로그인 후 사용가능한 서비스입니다.
 		// 2. TodoDao객체에서 모든 일정정보를 조회한다.
 		// 3. 로그인한 사용자가 작성자로 설정되어 있는 일정만 ArrayList에 담아서 반환한다.
-		return null;
+		if (!this.로그인여부제공서비스()) {
+			throw new TodoException("로그인 후 사용가능한 서비스입니다.");
+		}
+		
+		ArrayList<Todo> value = new ArrayList<Todo>();
+		
+		for (Todo todo : todoDao.getTodos()) {
+			if (loginedUser.getId().equals(todo.getWriter())) {
+				value.add(todo);
+			}
+		}
+		
+		return value;
 	}
 	
 	/**
@@ -130,7 +172,21 @@ public class TodoService {
 		// 3. 일정정보가 존재하지 않으면 TodoException 발생 - 일정번호에 해당하는 일정정보가 존재하지 않습니다.
 		// 4. 일정정보 작성자와 로그인한 사용자가 일치하지 않으면 TodoException - 다른 사용자의 일정은 조회할 수 없습니다.
 		// 5. 조회된 일정정보를 반환한다.
-		return null;
+		if (!this.로그인여부제공서비스()) {
+			throw new TodoException("로그인 후 사용가능한 서비스입니다.");
+		}
+		
+		Todo todo = todoDao.getTodoByNo(no);
+		
+		if (todoDao.getTodoByNo(no) == null) {
+			throw new TodoException("일정번호에 해당하는 일정정보가 존재하지 않습니다.");
+		}
+		
+		if (!loginedUser.getId().equals(todo.getWriter())) {
+			throw new TodoException("다른 사용자의 일정은 조회할 수 없습니다.");
+		}
+		
+		return todo;
 	}
 	
 	/**
@@ -145,6 +201,22 @@ public class TodoService {
 		// 3. 일정정보가 존재하지 않으면 TodoException 발생 - 일정번호에 해당하는 일정정보가 존재하지 않습니다.
 		// 4. 일정정보 작성자와 로그인한 사용자가 일치하지 않으면 TodoException - 다른 사용자의 일정은 변경할 수 없습니다.
 		// 5. 전달받은 정보로 조회된 일정정보의 제목과 내용을 변경한다.
+		if (!this.로그인여부제공서비스()) {
+			throw new TodoException("로그인 후 사용가능한 서비스입니다.");
+		}
+		
+		Todo todo = todoDao.getTodoByNo(no);
+		
+		if (todoDao.getTodoByNo(no) == null) {
+			throw new TodoException("일정번호에 해당하는 일정정보가 존재하지 않습니다.");
+		}
+		
+		if (!loginedUser.getId().equals(todo.getWriter())) {
+			throw new TodoException("다른 사용자의 일정은 변경할 수 없습니다");
+		}
+		
+		todo.setTitle(title);
+		todo.setText(text);
 	}
 	
 	/**
@@ -158,6 +230,22 @@ public class TodoService {
 		// 4. 일정정보 작성자와 로그인한 사용자가 일치하지 않으면 TodoException - 다른 사용자의 일정은 변경할 수 없습니다.
 		// 5. 조회된 일정정보의 상태를 완료상태로 변경한다.
 		// 6. 조회된 일정정보의 완료일자를 현재날짜와 시간정보로 설정한다.
+		if (!this.로그인여부제공서비스()) {
+			throw new TodoException("로그인 후 사용가능한 서비스입니다.");
+		}
+		
+		Todo todo = todoDao.getTodoByNo(no);
+		
+		if (todoDao.getTodoByNo(no) == null) {
+			throw new TodoException("일정번호에 해당하는 일정정보가 존재하지 않습니다.");
+		}
+		
+		if (!loginedUser.getId().equals(todo.getWriter())) {
+			throw new TodoException("다른 사용자의 일정은 변경할 수 없습니다");
+		}
+		
+		todo.setStatus(todo.TODO_STATUS_COMPLETED);
+		todo.setCompletedDate(new Date());
 	}
 	
 	/**
@@ -170,6 +258,22 @@ public class TodoService {
 		// 3. 일정정보가 존재하지 않으면 TodoException 발생 - 일정번호에 해당하는 일정정보가 존재하지 않습니다.
 		// 4. 일정정보 작성자와 로그인한 사용자가 일치하지 않으면 TodoException - 다른 사용자의 일정은 삭제할 수 없습니다.
 		// 5. 일정정보의 상태를 삭제로 변경하고, 삭제일을 현재 날짜와 시간으로 설정한다.
+		if (!this.로그인여부제공서비스()) {
+			throw new TodoException("로그인 후 사용가능한 서비스입니다.");
+		}
+		
+		Todo todo = todoDao.getTodoByNo(no);
+		
+		if (todoDao.getTodoByNo(no) == null) {
+			throw new TodoException("일정번호에 해당하는 일정정보가 존재하지 않습니다.");
+		}
+		
+		if (!loginedUser.getId().equals(todo.getWriter())) {
+			throw new TodoException("다른 사용자의 일정은 삭제할 수 없습니다");
+		}
+		
+		todo.setStatus(todo.TODO_STATUS_DELETED);
+		todo.setDeletedDate(new Date());
 	}
 	
 	/**
