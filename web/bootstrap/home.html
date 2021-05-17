@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="ko">
+    <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- 
+            bootstrap.min.css파일을 웹페이지에 포함시킨다.
+            bootstrap.min.css파일은 bootstrap.css파일에서 불필요한 공백을 제거한 버전이다.
+
+            bootstrap.min.css파일에는 레이아웃, 컴포넌트, 폼 등을 작성하는데 사용되는
+            다양한 CSS 스타일들이 미리 정의되어 있다.
+            * 컴포넌트 - 버튼, 카드, 모달, 내비바, 리스트그룹, 테이블 등과 같은 웹페이지 
+            작성에 사용되는 다양한 요소들이다.
+            bootstrap.min.css파일을 웹페이지에 link태그를 사용해서 포함시키고, 부트스트랩에서 
+            제공하는 다양한 레이아웃, 컴포넌트, 폼관련 스타일들을 사용하면 빠르게 웹페이지를 작성할 수 있다.
+        -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Document</title>
+    </head>
+    <body>
+        <!-- 
+            내비바 사용하기
+         -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <!--
+                    .navbar-brand가 적용된 a태그에는 회사의 로고, 회사명을 컨텐츠로 가진다.
+                    링크주소는 사이트의 홈페이지로 지정한다.
+                -->
+                <a class="navbar-brand" href="/home.html">중앙HTA</a>
+                <!--
+                    .navbar-toggler은 화면의 너비가 작아지면 표시되고,
+                    button을 클릭할 때 마다 내비게이션 메뉴가 토글된다.
+                -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <!--
+                    .collapse .navber-collapse는 위의 .navbar-toggle 버튼을 클릭할 때 마다
+                    토글되는 내비게이션 메뉴를 포함하는 태그에 추가하는 클래스 속성값이다.
+                -->
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <!--
+                        .navber-nav는 내비게이션 메뉴리스트를 포함하는 태그에 붙인다.
+                        .nav-item은 내비게이션 메뉴를 정의할 때 사용되는 클래스속성값이다.
+                        
+                    -->
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Features</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Pricing</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- 
+            bootstrap.bundle.min.js은 자바스크립트 파일이다.
+            부트스트랩에서 제공하는 다양한 컴포넌트드링 작동하기 위해서는 bootstrap.bundle.min.js가 필요하다
+        -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+    </body>
+</html>
