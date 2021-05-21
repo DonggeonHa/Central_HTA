@@ -1,4 +1,4 @@
-<%@page import="com.sample.hr.vo.Employee"%>
+<%--  --%><%@page import="com.sample.hr.vo.Employee"%>
 <%@page import="java.util.List"%>
 <%@page import="com.sample.hr.dao.EmployeeDao"%>
 <%@page import="com.sample.hr.dto.DepartmentDto"%>
@@ -78,6 +78,18 @@
 			%>
 			</tbody>
 		</table>
+		
+		<p>
+			<a href="#">부서정보 수정</a>
+		<%
+			if (departmentDto.getEmpCount() == 0) {
+		%>
+				<a href="remove.jsp?deptId=<%=departmentId%>"><strong>부서정보 삭제</strong></a>
+			
+		<%
+			}
+		%>
+		</p>
 		
 		<p><a href="list.jsp">부서 목록페이지로 되돌아가기</a></p>
 	</body>

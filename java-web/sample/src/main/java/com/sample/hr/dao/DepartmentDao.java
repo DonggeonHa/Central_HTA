@@ -18,6 +18,24 @@ import com.sample.utils.ConnectionUtil;
  */
 public class DepartmentDao {
 
+	public void insertDepartment(Department department) throws SQLException {
+		
+		String sql = "INSERT INTO departments "
+				   + "(department_id, department_name, location_id) "
+				   + "VALUES(departments_seq.nextval, ?, ?) ";
+		
+		Connection conn = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, department.getName());
+		pstmt.setInt(2, department.getLocationId());
+		pstmt.executeUpdate(); // INSERT, UPDATE, DELETE 구문을 실행한다.
+		
+		pstmt.close();
+		conn.close();
+				
+	}
+	
+	
 	/**
 	 * 모든 부서정보를 반환한다
 	 * @return 부서정보 목록
@@ -92,4 +110,6 @@ public class DepartmentDao {
 		
 		
 	}
+	
+	
 }
