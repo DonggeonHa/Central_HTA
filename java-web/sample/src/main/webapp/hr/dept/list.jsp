@@ -15,13 +15,13 @@
 		<%
 			request.setCharacterEncoding("UTF-8");
 			DepartmentDao departmentDao = new DepartmentDao();
-			List<Department> departments = departmentDao.getAlldepartments();
+			List<Department> departments = departmentDao.getAllDepartments();
 		%>
 		<ul>
 		<%
 			for (Department dept : departments) {
 		%>
-				<li><a href="#"><%=dept.getName() %></a></li>
+				<li><a href="detail.jsp?deptId=<%=dept.getId()%>"><%=dept.getName() %></a></li>
 		<%
 			}
 		%>

@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.sample.hr.dto.DepartmentDto;
 import com.sample.hr.vo.Department;
 import com.sample.utils.ConnectionUtil;
 
@@ -22,7 +23,7 @@ public class DepartmentDao {
 	 * @return 부서정보 목록
 	 * @throws SQLException
 	 */
-	public List<Department> getAlldepartments() throws SQLException {
+	public List<Department> getAllDepartments() throws SQLException {
 		List<Department> departments = new ArrayList<Department>();
 		String sql = "SELECT department_id, department_name, manager_id, location_id "
 				   + "FROM departments "
@@ -47,5 +48,48 @@ public class DepartmentDao {
 		con.close();
 		
 		return departments;
+	}
+	
+	/**
+	 * 부서아이디를 전달받아서 부서기본 정보를 반환한다.
+	 * @param deptId 조회할 부서아이디
+	 * @return 부서정보가 포함된 DepartmentDto
+	 * @throws SQLException
+	 */
+	public DepartmentDto getDepartmentDto(int deptId) throws SQLException {
+		String sql = "SELECT d.department_id, d.department_name, d.manager_id, m.first_name manager_name, l.location_id, l.city, "
+		           + "		 (SELECT COUNT(*) FROM employees E WHERE e.department_id = ?) emp_count "
+		           + "FROM departments d, locations l, employees m "
+		           + "WHERE d.department_id = ? "
+		           + "AND d.manager_id = m.employee_id(+) "
+		           + "AND d.location_id = l.location_id ";
+		
+		DepartmentDto dto = null;
+		
+		Connection conn = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1, deptId);
+		pstmt.setInt(2, deptId);
+		ResultSet rs = pstmt.executeQuery();
+		
+		if (rs.next()) {
+			dto = new DepartmentDto();
+			dto.setId(rs.getInt("department_id"));
+			dto.setName(rs.getString("department_name"));
+			dto.setManagerId(rs.getInt("manager_id"));
+			dto.setManagerName(rs.getString("manager_name"));
+			dto.setLocationId(rs.getInt("location_id"));
+			dto.setCity(rs.getString("city"));
+			dto.setEmpCount(rs.getInt("emp_count"));
+		}
+		
+		rs.close();
+		pstmt.close();
+		conn.close();
+		
+		
+		return dto;
+		
+		
 	}
 }

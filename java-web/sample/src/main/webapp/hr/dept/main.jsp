@@ -11,7 +11,7 @@
 		
 		<h3>주요 메뉴</h3>
 		<ul>
-			<li><a href="./list.jsp">부서목록 조회</a></li>
+			<li><a href="list.jsp">부서목록 조회</a></li>
 			<li><a href="#">새 부서 등록</a></li>
 			<li><a href="#">부서정보 변경</a></li>
 			<li><a href="#">부서정보 삭제</a></li>
