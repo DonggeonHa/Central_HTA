@@ -74,7 +74,7 @@ public class EmployeeDao {
 				   + "m.employee_id m_id, m.first_name manager_name1, m.last_name manager_name2 "
 				   + "FROM employees e, employees m, departments d "
 				   + "WHERE e.manager_id = m.employee_id "
-				   + "AND e.department_id = d.department_id ";
+				   + "AND e.department_id = d.department_id(+) ";
 		
 		EmployeeDto employeeDto = null;
 		
