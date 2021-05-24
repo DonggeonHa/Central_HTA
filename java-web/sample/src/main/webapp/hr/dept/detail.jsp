@@ -18,9 +18,13 @@
 			request.setCharacterEncoding("UTF-8");
 			// http://localhost/sample/hr/dept/detail.jsp?deptId=10
 			// 요청객체에서 요청파라미터값 조회하기
+			// 부서목록페이지에서  detail.jsp를 요청할 떄 전달한 부서아이디를 조회하기
 			int departmentId = Integer.parseInt(request.getParameter("deptId"));
 		
+			// Departments 테이블에 대한 CRUD 기능을 제공하는 DepartmentDao객체 생성하기
 			DepartmentDao departmentDao = new DepartmentDao();
+			// 부서기본정보를 반환하는 getDepartmentDto(부서아이디)를 실행해서 부서 기본정보 획득
+			// DepartmentDto는 부서정보, 부서관리자정보, 소재지정보, 소속사원숫자를 저장하는 DTO객체다.
 			DepartmentDto departmentDto = departmentDao.getDepartmentDto(departmentId);
 		%>
 		
@@ -37,6 +41,7 @@
 		
 		
 		<%
+			// EMPLOYEES 테이블에 대한 CRUD기능을
 			EmployeeDao employeeDao = new EmployeeDao();
 			List<Employee> employees = employeeDao.getEmployeesByDepartmentId(departmentId);
 		%>
@@ -55,7 +60,7 @@
 			</thead>
 			<tbody>
 			<%
-				if (employees.isEmpty()) {
+				if (employees.isEmpty()) { // 해당 부서에 소속된 사원이 하나도 없는 경우
 			%>
 				<tr>
 					<td colspan="5">소속된 사원이 존재하지 않습니다.</td>
@@ -80,7 +85,7 @@
 		</table>
 		
 		<p>
-			<a href="#">부서정보 수정</a>
+			<a href="modifyform.jsp?deptId=<%=departmentId%>">부서정보 수정</a>
 		<%
 			if (departmentDto.getEmpCount() == 0) {
 		%>

@@ -17,6 +17,11 @@ import com.sample.utils.ConnectionUtil;
  */
 public class LocationDao {
 
+	/**
+	 * 모든 부서 소재지 정보를 담음
+	 * @return
+	 * @throws SQLException
+	 */
 	public List<Location> getAllLocations() throws SQLException {
 		List<Location> locations = new ArrayList<Location>();
 		

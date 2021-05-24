@@ -42,7 +42,7 @@ public class EmployeeDao {
 	
 	public List<Employee> getAllEmployees() throws SQLException {
 		List<Employee> employees = new ArrayList<Employee>();
-		String sql = "SELECT employee_id, first_name, last_name "
+		String sql = "SELECT * "
 				   + "FROM employees "
 				   + "ORDER BY employee_id ASC ";
 		
@@ -55,6 +55,8 @@ public class EmployeeDao {
 			emp.setId(rs.getInt("employee_id"));
 			emp.setFirstName(rs.getString("first_name"));
 			emp.setLastName(rs.getString("last_name"));
+			emp.setEmail(rs.getString("email"));
+			emp.setPhoneNumber(rs.getString("phone_number"));
 			
 			employees.add(emp);
 		}
@@ -66,68 +68,70 @@ public class EmployeeDao {
 		return employees;
 	}
 	
-	public Employee getEmployee(int empId) throws SQLException {
-		String sql = "SELECT * "
-		           + "FROM employees "
-		           + "WHERE employee_id = ? ";
+	public EmployeeDto getEmployeeDtoById(int employeeId) throws SQLException {
+		String sql = "SELECT e.employee_id, e.first_name, e.last_name, e.phone_number, e.email, e.job_id, "
+				   + "e.hire_date, e.salary, e.commission_pct, d.department_id, d.department_name, "
+				   + "m.employee_id m_id, m.first_name manager_name1, m.last_name manager_name2 "
+				   + "FROM employees e, employees m, departments d "
+				   + "WHERE e.manager_id = m.employee_id "
+				   + "AND e.department_id = d.department_id ";
 		
-		Employee emp = null;
-		
-		Connection conn = ConnectionUtil.getConnection();
-		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setInt(1, empId);
-		ResultSet rs = pstmt.executeQuery();
-		
-		if (rs.next()) {
-			emp = new Employee();
-			emp.setId(rs.getInt("employee_id"));
-			emp.setFirstName(rs.getString("first_name"));
-			emp.setLastName(rs.getString("last_name"));
-			emp.setEmail(rs.getString("email"));
-			emp.setPhoneNumber(rs.getString("phone_number"));
-			emp.setHireDate(rs.getDate("hire_date"));
-			emp.setJobId(rs.getString("job_id"));
-			emp.setSalary(rs.getDouble("salary"));
-			emp.setCommissionPct(rs.getDouble("commission_pct"));
-			emp.setManagerId(rs.getInt("manager_id"));
-			emp.setDepartmentId(rs.getInt("department_id"));
-		}
-		
-		rs.close();
-		pstmt.close();
-		conn.close();
-		
-		
-		return emp;
-	}
-	
-	public List<EmployeeDto> getEmployeeDto() throws SQLException {
-		String sql = "SELECT DISTINCT m.employee_id, m.first_name, m.last_name "
-				+ "FROM employees e, employees m "
-				+ "WHERE e.manager_id = m.employee_id "
-				+ "ORDER BY m.employee_id ASC ";
-		
-		List<EmployeeDto> dtos = new ArrayList<EmployeeDto>();
+		EmployeeDto employeeDto = null;
 		
 		Connection conn = ConnectionUtil.getConnection();
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		ResultSet rs = pstmt.executeQuery();
 		
 		while(rs.next()) {
-			EmployeeDto employeeDto = new EmployeeDto();
-			employeeDto.setManagerId(rs.getInt("employee_id"));
-			employeeDto.setManagerName(rs.getString("first_name") + rs.getString("last_name"));
+			employeeDto = new EmployeeDto();
+			employeeDto.setId(rs.getInt("employee_id"));
+			employeeDto.setEmployeeName(rs.getString("first_name") + rs.getString("last_name"));
+			employeeDto.setPhoneNumber(rs.getString("phone_number"));
+			employeeDto.setEmail(rs.getString("email"));
+			employeeDto.setJobId(rs.getString("job_id"));
+			employeeDto.setHireDate(rs.getDate("hire_date"));
+			employeeDto.setSalary(rs.getDouble("salary"));
+			employeeDto.setCommissionPct(rs.getDouble("commission_pct"));
+			employeeDto.setDepartmentId(rs.getInt("department_id"));
+			employeeDto.setDepartmentName(rs.getString("department_name"));
+			employeeDto.setManagerId(rs.getInt("m_id"));
+			employeeDto.setManagerName(rs.getString("manager_name1") + rs.getString("manager_name2"));
 			
-			dtos.add(employeeDto);
 		}
 		
 		rs.close();
 		pstmt.close();
 		conn.close();
 		
-		return dtos;
+		return employeeDto;
+	}
+	
+	public List<Employee> getEmployeesByManagerId(int employeeId) throws SQLException {
+		List<Employee> employees = new ArrayList<Employee>();
+		
+		String sql = "SELECT * "
+				   + "FROM employees e, employees m "
+				   + "WHERE e.manager_id = m.employee_id "
+				   + "AND m.employee_id = ? ";
+		
+		Connection conn = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1, employeeId);
+		ResultSet rs = pstmt.executeQuery();
+		
+		while (rs.next()) {
+			Employee emp = new Employee();
+			emp.setId(rs.getInt("employee_id"));
+			emp.setFirstName(rs.getString("first_name"));
+			emp.setLastName(rs.getString("last_name"));
+			emp.setEmail(rs.getString("email"));
+			emp.setPhoneNumber(rs.getString("phone_number"));
+			
+			employees.add(emp);
+		}
 		
 		
+		return employees;
 	}
 	
 	/**

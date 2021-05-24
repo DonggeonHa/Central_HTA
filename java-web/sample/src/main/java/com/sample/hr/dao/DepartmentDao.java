@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.AbstractSequentialList;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +19,50 @@ import com.sample.utils.ConnectionUtil;
  */
 public class DepartmentDao {
 
+	/**
+	 * 수정된 부서정보를 전달받아서 부서정보를 변경한다
+	 * @param dept 수정된 부서정보
+	 * @throws SQLException
+	 */
+	public void updateDepartment(Department dept) throws SQLException {
+		String sql = "UPDATE departments "
+				   + "SET department_name = ?, manager_id = ?, location_id = ? "
+				   + "WHERE department_id = ? ";
+		
+		Connection conn = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, dept.getName());
+		pstmt.setInt(2, dept.getManagerId());
+		pstmt.setInt(3, dept.getLocationId());
+		pstmt.setInt(4, dept.getId());
+		pstmt.executeQuery();
+		
+		pstmt.close();
+		conn.close();
+		
+	}
+	 
+	
+	
+	/**
+	 * 부서아이디를 전달받아서 해당 부서의 정보를 테이블에서 삭제한다. 	
+	 * @param departmentId 삭제할 부서 아이디
+	 * @throws SQLException
+	 */
+	public void deleteDepartment(int departmentId) throws SQLException {
+		String sql = "DELETE FROM departments "
+				   + "WHERE department_id = ? ";
+		
+		Connection conn = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1, departmentId);
+		pstmt.executeUpdate();
+		
+		pstmt.close();
+		conn.close();
+	}
+	
+	
 	public void insertDepartment(Department department) throws SQLException {
 		
 		String sql = "INSERT INTO departments "
@@ -107,9 +152,35 @@ public class DepartmentDao {
 		
 		
 		return dto;
-		
-		
 	}
 	
+	public Department getDepartmentById(int deptId) throws SQLException {
+		
+		Department department = null;
+		
+		String sql = "SELECT * "
+				   + "FROM departments "
+				   + "WHERE department_id = ? ";
+		
+		Connection conn = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1, deptId);
+		ResultSet rs = pstmt.executeQuery();
+		
+		if (rs.next()) {
+			department = new Department();
+			
+			department.setId(rs.getInt("department_id"));
+			department.setName(rs.getString("department_name"));
+			department.setManagerId(rs.getInt("manager_id"));
+			department.setLocationId(rs.getInt("location_id"));
+		}
+		
+		rs.close();
+		pstmt.close();
+		conn.close();
+		
+		return department;
+	}
 	
 }
