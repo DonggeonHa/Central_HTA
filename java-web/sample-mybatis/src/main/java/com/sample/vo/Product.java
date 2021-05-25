@@ -6,6 +6,7 @@ public class Product {
 
 	private int no;
 	private String name;
+	private String maker;
 	private String category;
 	private int price;
 	private int discountPrice;
@@ -29,6 +30,14 @@ public class Product {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getMaker() {
+		return maker;
+	}
+
+	public void setMaker(String maker) {
+		this.maker = maker;
 	}
 
 	public String getCategory() {
@@ -78,4 +87,5 @@ public class Product {
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
+	
 }
