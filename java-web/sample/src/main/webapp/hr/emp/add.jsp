@@ -45,8 +45,10 @@
 	
 	// EmployeeDao의 insertEmployee(Employee emp)을 실행시켜서 새 사원정보 등록
 	EmployeeDao employeeDao = new EmployeeDao();
+	// 신규 사원정보를 전달받아서 데이터베이스에 저장하는 insertEmployee(사원정보)를 실행한다.
 	employeeDao.insertEmployee(employee);
 	
-	// 브라우져가 다시 요청할 URL을 응답으로 보낸다
+	// INSERT, UPDATE ,DELETE 작업을 수행한 후에는 클라이언트에게 재요청할 URL을 응답으로 보낸다
+	// HttpServletResponse(응답객체)의 sendRedirect(URL)을 실행하면 재요청 URL을 응답으로 보낼 수 있다.
 	response.sendRedirect("list.jsp");
 %>

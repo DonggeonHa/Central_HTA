@@ -12,7 +12,7 @@ import com.sample.hr.vo.Employee;
 import com.sample.utils.ConnectionUtil;
 
 /**
- * EMPLOYEES Å×ÀÌºí¿¡ ´ëÇÑ CRUD¸¦ Á¦°øÇÏ´Â Å¬·¡½º´Ù
+ * EMPLOYEES í…Œì´ë¸”ì— ëŒ€í•œ CRUDë¥¼ ì œê³µí•˜ëŠ” í´ë˜ìŠ¤ë‹¤
  * @author Dylan
  *
  */
@@ -34,10 +34,13 @@ public class EmployeeDao {
 		pstmt.setDouble(7, employee.getCommissionPct());
 		pstmt.setInt(8, employee.getManagerId());
 		pstmt.setInt(9, employee.getDepartmentId());
-		pstmt.executeUpdate(); // INSERT, UPDATE, DELETE ±¸¹®À» ½ÇÇàÇÑ´Ù.
+		pstmt.executeUpdate(); // INSERT, UPDATE, DELETE êµ¬ë¬¸ì„ ì‹¤í–‰í•œë‹¤.
 		
 		pstmt.close();
 		conn.close();
+		
+		
+		
 	}
 	
 	public List<Employee> getAllEmployees() throws SQLException {
@@ -46,9 +49,9 @@ public class EmployeeDao {
 				   + "FROM employees "
 				   + "ORDER BY employee_id ASC ";
 		
-		Connection con = ConnectionUtil.getConnection(); 		// DBMS¿Í ¿¬°áÀ» ´ã´çÇÏ´Â Connection °´Ã¼ È¹µæ
-		PreparedStatement pstmt = con.prepareStatement(sql);	// ÁöÁ¤µÈ SQLÀ» DBMS·Î Àü¼ÛÇÏ´Â PreparedStatement  °´Ã¼ È¹µæ
-		ResultSet rs = pstmt.executeQuery();					// SQLÀ» DBMS·Î Àü¼ÛÇÏ°í ½ÇÇà°á°ú°¡ Æ÷ÇÔµÈ ResultSet °´Ã¼ È¹µæ
+		Connection con = ConnectionUtil.getConnection(); 		// DBMSì™€ ì—°ê²°ì„ ë‹´ë‹¹í•˜ëŠ” Connection ê°ì²´ íšë“
+		PreparedStatement pstmt = con.prepareStatement(sql);	// ì§€ì •ëœ SQLì„ DBMSë¡œ ì „ì†¡í•˜ëŠ” PreparedStatement  ê°ì²´ íšë“
+		ResultSet rs = pstmt.executeQuery();					// SQLì„ DBMSë¡œ ì „ì†¡í•˜ê³  ì‹¤í–‰ê²°ê³¼ê°€ í¬í•¨ëœ ResultSet ê°ì²´ íšë“
 		
 		while (rs.next()) {
 			Employee emp = new Employee();
@@ -68,18 +71,26 @@ public class EmployeeDao {
 		return employees;
 	}
 	
+	/**
+	 * ì‚¬ì›ì•„ì´ë””ì— í•´ë‹¹í•˜ëŠ” ì‚¬ì›ì •ë³´ë¥¼ ë°˜í™˜í•œë‹¤.
+	 * @param employeeId ì¡°íšŒí•  ì‚¬ì›ì•„ì´ë””
+	 * @return ì‚¬ì›ì •ë³´ ëª©ë¡
+	 * @throws SQLException
+	 */
 	public EmployeeDto getEmployeeDtoById(int employeeId) throws SQLException {
 		String sql = "SELECT e.employee_id, e.first_name, e.last_name, e.phone_number, e.email, e.job_id, "
 				   + "e.hire_date, e.salary, e.commission_pct, d.department_id, d.department_name, "
 				   + "m.employee_id m_id, m.first_name manager_name1, m.last_name manager_name2 "
 				   + "FROM employees e, employees m, departments d "
-				   + "WHERE e.manager_id = m.employee_id "
-				   + "AND e.department_id = d.department_id(+) ";
+				   + "WHERE e.manager_id = m.employee_id(+) "
+				   + "AND e.department_id = d.department_id(+) "
+				   + "AND e.employee_id = ? ";
 		
 		EmployeeDto employeeDto = null;
 		
 		Connection conn = ConnectionUtil.getConnection();
 		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1, employeeId);
 		ResultSet rs = pstmt.executeQuery();
 		
 		while(rs.next()) {
@@ -106,6 +117,12 @@ public class EmployeeDao {
 		return employeeDto;
 	}
 	
+	/**
+	 * ì „ë‹¬ë°›ì€ ì‚¬ì›ì•„ì´ë””ì˜ ì‚¬ì›ì—ê²Œ ë³´ê³ í•˜ëŠ” ì§ì›ì •ë³´ ëª©ë¡ì„ ë°˜í™˜í•œë‹¤.
+	 * @param employeeId ì‚¬ì›ì•„ì´ë””
+	 * @return ì‚¬ì›ì •ë³´ ëª©ë¡
+	 * @throws SQLException
+	 */
 	public List<Employee> getEmployeesByManagerId(int employeeId) throws SQLException {
 		List<Employee> employees = new ArrayList<Employee>();
 		
@@ -126,16 +143,26 @@ public class EmployeeDao {
 			emp.setLastName(rs.getString("last_name"));
 			emp.setEmail(rs.getString("email"));
 			emp.setPhoneNumber(rs.getString("phone_number"));
+			emp.setHireDate(rs.getDate("hire_date"));
+			emp.setJobId(rs.getString("job_id"));
+			emp.setSalary(rs.getDouble("salary"));
+			emp.setCommissionPct(rs.getDouble("commission_pct"));
+			emp.setManagerId(rs.getInt("manager_id"));
+			emp.setDepartmentId(rs.getInt("department_id"));
 			
 			employees.add(emp);
 		}
+		
+		rs.close();
+		pstmt.close();
+		conn.close();
 		
 		
 		return employees;
 	}
 	
 	/**
-	 * ºÎ¼­¾ÆÀÌµğ¸¦ Àü´Ş¹Ş¾Æ¼­
+	 * ë¶€ì„œì•„ì´ë””ë¥¼ ì „ë‹¬ë°›ì•„ì„œ
 	 * @param deptId
 	 * @return
 	 * @throws SQLException

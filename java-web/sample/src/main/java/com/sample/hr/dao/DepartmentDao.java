@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.AbstractSequentialList;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,15 +12,15 @@ import com.sample.hr.vo.Department;
 import com.sample.utils.ConnectionUtil;
 
 /**
- * DEPARTMENTS Å×ÀÌºí¿¡ ´ëÇÑ CRUD ±â´ÉÀ» Á¦°øÇÏ´Â Å¬·¡½º´Ù.
+ * DEPARTMENTS í…Œì´ë¸”ì— ëŒ€í•œ CRUD ê¸°ëŠ¥ì„ ì œê³µí•˜ëŠ” í´ë˜ìŠ¤ë‹¤.
  * @author Dylan
  *
  */
 public class DepartmentDao {
 
 	/**
-	 * ¼öÁ¤µÈ ºÎ¼­Á¤º¸¸¦ Àü´Ş¹Ş¾Æ¼­ ºÎ¼­Á¤º¸¸¦ º¯°æÇÑ´Ù
-	 * @param dept ¼öÁ¤µÈ ºÎ¼­Á¤º¸
+	 * ìˆ˜ì •ëœ ë¶€ì„œì •ë³´ë¥¼ ì „ë‹¬ë°›ì•„ì„œ ë¶€ì„œì •ë³´ë¥¼ ë³€ê²½í•œë‹¤
+	 * @param dept ìˆ˜ì •ëœ ë¶€ì„œì •ë³´
 	 * @throws SQLException
 	 */
 	public void updateDepartment(Department dept) throws SQLException {
@@ -45,8 +44,8 @@ public class DepartmentDao {
 	
 	
 	/**
-	 * ºÎ¼­¾ÆÀÌµğ¸¦ Àü´Ş¹Ş¾Æ¼­ ÇØ´ç ºÎ¼­ÀÇ Á¤º¸¸¦ Å×ÀÌºí¿¡¼­ »èÁ¦ÇÑ´Ù. 	
-	 * @param departmentId »èÁ¦ÇÒ ºÎ¼­ ¾ÆÀÌµğ
+	 * ë¶€ì„œì•„ì´ë””ë¥¼ ì „ë‹¬ë°›ì•„ì„œ í•´ë‹¹ ë¶€ì„œì˜ ì •ë³´ë¥¼ í…Œì´ë¸”ì—ì„œ ì‚­ì œí•œë‹¤. 	
+	 * @param departmentId ì‚­ì œí•  ë¶€ì„œ ì•„ì´ë””
 	 * @throws SQLException
 	 */
 	public void deleteDepartment(int departmentId) throws SQLException {
@@ -73,7 +72,7 @@ public class DepartmentDao {
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1, department.getName());
 		pstmt.setInt(2, department.getLocationId());
-		pstmt.executeUpdate(); // INSERT, UPDATE, DELETE ±¸¹®À» ½ÇÇàÇÑ´Ù.
+		pstmt.executeUpdate(); // INSERT, UPDATE, DELETE êµ¬ë¬¸ì„ ì‹¤í–‰í•œë‹¤.
 		
 		pstmt.close();
 		conn.close();
@@ -82,8 +81,8 @@ public class DepartmentDao {
 	
 	
 	/**
-	 * ¸ğµç ºÎ¼­Á¤º¸¸¦ ¹İÈ¯ÇÑ´Ù
-	 * @return ºÎ¼­Á¤º¸ ¸ñ·Ï
+	 * ëª¨ë“  ë¶€ì„œì •ë³´ë¥¼ ë°˜í™˜í•œë‹¤
+	 * @return ë¶€ì„œì •ë³´ ëª©ë¡
 	 * @throws SQLException
 	 */
 	public List<Department> getAllDepartments() throws SQLException {
@@ -92,9 +91,9 @@ public class DepartmentDao {
 				   + "FROM departments "
 				   + "ORDER BY department_id ASC ";
 		
-		Connection con = ConnectionUtil.getConnection(); 		// DBMS¿Í ¿¬°áÀ» ´ã´çÇÏ´Â Connection °´Ã¼ È¹µæ
-		PreparedStatement pstmt = con.prepareStatement(sql);	// ÁöÁ¤µÈ SQLÀ» DBMS·Î Àü¼ÛÇÏ´Â PreparedStatement  °´Ã¼ È¹µæ
-		ResultSet rs = pstmt.executeQuery();					// SQLÀ» DBMS·Î Àü¼ÛÇÏ°í ½ÇÇà°á°ú°¡ Æ÷ÇÔµÈ ResultSet °´Ã¼ È¹µæ
+		Connection con = ConnectionUtil.getConnection(); 		// DBMSì™€ ì—°ê²°ì„ ë‹´ë‹¹í•˜ëŠ” Connection ê°ì²´ íšë“
+		PreparedStatement pstmt = con.prepareStatement(sql);	// ì§€ì •ëœ SQLì„ DBMSë¡œ ì „ì†¡í•˜ëŠ” PreparedStatement  ê°ì²´ íšë“
+		ResultSet rs = pstmt.executeQuery();					// SQLì„ DBMSë¡œ ì „ì†¡í•˜ê³  ì‹¤í–‰ê²°ê³¼ê°€ í¬í•¨ëœ ResultSet ê°ì²´ íšë“
 		
 		while (rs.next()) {
 			Department department = new Department();
@@ -114,9 +113,9 @@ public class DepartmentDao {
 	}
 	
 	/**
-	 * ºÎ¼­¾ÆÀÌµğ¸¦ Àü´Ş¹Ş¾Æ¼­ ºÎ¼­±âº» Á¤º¸¸¦ ¹İÈ¯ÇÑ´Ù.
-	 * @param deptId Á¶È¸ÇÒ ºÎ¼­¾ÆÀÌµğ
-	 * @return ºÎ¼­Á¤º¸°¡ Æ÷ÇÔµÈ DepartmentDto
+	 * ë¶€ì„œì•„ì´ë””ë¥¼ ì „ë‹¬ë°›ì•„ì„œ ë¶€ì„œê¸°ë³¸ ì •ë³´ë¥¼ ë°˜í™˜í•œë‹¤.
+	 * @param deptId ì¡°íšŒí•  ë¶€ì„œì•„ì´ë””
+	 * @return ë¶€ì„œì •ë³´ê°€ í¬í•¨ëœ DepartmentDto
 	 * @throws SQLException
 	 */
 	public DepartmentDto getDepartmentDto(int deptId) throws SQLException {

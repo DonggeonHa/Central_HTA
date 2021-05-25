@@ -12,7 +12,7 @@ public class ConnectionUtil {
 	private static final String USER_PASSWORD = "zxcv1234";
 	
 	/*
-	 * ¿À¶óÅ¬ JDBC µå¶óÀÌ¹öÅ¬·¡½º¸¦ ¸Ş¸ğ¸®·Î ·ÎµùÇÑ´Ù.
+	 * ì˜¤ë¼í´ JDBC ë“œë¼ì´ë²„í´ë˜ìŠ¤ë¥¼ ë©”ëª¨ë¦¬ë¡œ ë¡œë”©í•œë‹¤.
 	 */
 	static {
 		try {
@@ -23,8 +23,8 @@ public class ConnectionUtil {
 	}
 	
 	/**
-	 * µ¥ÀÌÅÍº£ÀÌ½º¿Í ¿¬°áµÈ ConnectionÀ» ¹İÈ¯ÇÑ´Ù.
-	 * @return Ä¿³Ø¼Ç °´Ã¼
+	 * ë°ì´í„°ë² ì´ìŠ¤ì™€ ì—°ê²°ëœ Connectionì„ ë°˜í™˜í•œë‹¤.
+	 * @return ì»¤ë„¥ì…˜ ê°ì²´
 	 * @throws SQLException
 	 */
 	public static Connection getConnection() throws SQLException {

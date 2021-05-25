@@ -1,4 +1,4 @@
-<%--  --%><%@page import="com.sample.hr.vo.Employee"%>
+<%@page import="com.sample.hr.vo.Employee"%>
 <%@page import="java.util.List"%>
 <%@page import="com.sample.hr.dao.EmployeeDao"%>
 <%@page import="com.sample.hr.dto.DepartmentDto"%>

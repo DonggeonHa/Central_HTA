@@ -14,7 +14,6 @@
 		<h3>주요 메뉴</h3>
 		<ul>
 			<li><a href="list.jsp">전체사원 목록</a></li>
-			<li><a href="#">사원정보 검색</a></li>
 			<li><a href="form.jsp">새 사원 등록</a></li>
 			<li><a href="#">사원정보 변경</a></li>
 			<li><a href="#">사원정보 삭제</a></li>

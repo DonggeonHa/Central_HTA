@@ -37,9 +37,13 @@
 				9. 6번과 7번에서 조회된 정보를 사원기본정보 테이블과 부하직원 테이블에 표시한다.
 			*/
 			request.setCharacterEncoding("UTF-8");
+			// 요청 파라미터 값 조회하기
+			// list.jsp에서 전달한 요청파라미터값 획득하기 <-- detail.jsp?empId=101
 			int empId = Integer.parseInt(request.getParameter("empId"));
 			
+			// EMPLOYEES 테이블을 대상으로 CRUD작업을 지원하는 EmployeeDao 객체 생성
 			EmployeeDao employeeDao = new EmployeeDao();
+			// list.jsp가 전달한 사원아이디로 사원의 기본정보 조회하기
 			EmployeeDto employeeDto = employeeDao.getEmployeeDtoById(empId);
 			
 			List<Employee> employees = employeeDao.getEmployeesByManagerId(empId);
@@ -56,7 +60,7 @@
 					<h3>사원 기본 정보</h3>
 					<table class="table table-bordered">
 						<tr>
-							<th>아이디</th><td><%=empId %></td>
+							<th>아이디</th><td><%=employeeDto.getId()%></td>
 							<th>이름</th><td><%=employeeDto.getEmployeeName()%></td>
 						</tr>
 						<tr>
@@ -68,7 +72,7 @@
 							<th>입사일</th><td><%=employeeDto.getHireDate() %></td>
 						</tr>
 						<tr>
-							<th>급여</th><td><%=employeeDto.getSalary() %>$</td>
+							<th>급여</th><td><%=employeeDto.getSalary() %> $</td>
 							<th>커미션</th><td><%=employeeDto.getCommissionPct() == 0 ? "없음" : employeeDto.getCommissionPct()%></td>
 						</tr>
 						<tr>

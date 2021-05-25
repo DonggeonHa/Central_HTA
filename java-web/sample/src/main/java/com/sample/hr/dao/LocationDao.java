@@ -11,14 +11,14 @@ import com.sample.hr.vo.Location;
 import com.sample.utils.ConnectionUtil;
 
 /**
- * LOCATIONS Å×ÀÌºí¿¡ ´ëÇÑ CRUD±â´ÉÀ» Á¦°øÇÏ´Â Å¬·¡½º
+ * LOCATIONS í…Œì´ë¸”ì— ëŒ€í•œ CRUDê¸°ëŠ¥ì„ ì œê³µí•˜ëŠ” í´ë˜ìŠ¤
  * @author Dylan
  *
  */
 public class LocationDao {
 
 	/**
-	 * ¸ğµç ºÎ¼­ ¼ÒÀçÁö Á¤º¸¸¦ ´ãÀ½
+	 * ëª¨ë“  ë¶€ì„œ ì†Œì¬ì§€ ì •ë³´ë¥¼ ë‹´ìŒ
 	 * @return
 	 * @throws SQLException
 	 */
