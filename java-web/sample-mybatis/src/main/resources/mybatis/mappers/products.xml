@@ -23,7 +23,7 @@
 		INSERT INTO sample_products
 		(product_no, product_name, product_maker, product_category, product_price, product_discount_price)
 		VALUES
-		(product_seq.nextval, #{name}, #{maker}, {category}, #{price}, #{discountPrice})
+		(product_seq.nextval, #{name}, #{maker}, #{category}, #{price}, #{discountPrice})
 	</insert>
 	
 	<!--
@@ -63,7 +63,7 @@
 			product_maker = #{maker},
 			product_category = #{category},
 			product_price = #{price},
-			product_discount_price = {discountPrice},
+			product_discount_price = #{discountPrice},
 			product_stock = #{stock},
 			product_sold_out = #{soldOut}
 		WHERE product_no = #{no}

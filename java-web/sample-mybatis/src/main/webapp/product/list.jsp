@@ -1,8 +1,7 @@
 <%@page import="com.sample.vo.Product"%>
 <%@page import="java.util.List"%>
 <%@page import="com.sample.dao.ProductDao"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -12,25 +11,35 @@
 		<title>상품몰</title>
 	</head>
 	<body>
-	<%
-		ProductDao productDao = ProductDao.getInstance();
-		List<Product> products = productDao.getAllProduct();
-	%>
+		<%
+			ProductDao productDao = ProductDao.getInstance();
+			List<Product> products = productDao.getAllProducts();
+		%>
 		<div class="container">
-			<nav class="navbar navbar-expand-sm bg-dark navbar-dark my-3">
-				<a class="navbar-brand" href="/sample-mybatis/index.jsp">HTA 몰</a>
-			  	<ul class="navbar-nav">
-			    	<li class="nav-item"><a class="nav-link" href="/sample-mybatis/index.jsp">홈</a></li>
-			    	<li class="nav-item active"><a class="nav-link" href="/sample-mybatis/product/list.jsp">상품목록</a></li>
-			    	<li class="nav-item"><a class="nav-link" href="#">Link 3</a></li>
-			  	</ul>
-			</nav>
-			<div class="row">
+			<%
+				String navItem = "product";
+			%>
+			<%@ include file="../common/header.jsp" %>
+			<div class="row mb-3">
+				<div class="col-12">
+					<h3 class="border p-3 bg-light">
+						상품 목록
+						<a href="form.jsp" class="btn btn-primary float-right">상품추가</a>
+					</h3>
+				</div>
+			</div>
+			<div class="row mb-3">
 				<div class="col-12">
 					<div class="card">
-						<h5 class="card-header">상품 목록</h5>
-						<div class="card-body">
+						<div class="card-body pb-0">
 							<table class="table">
+								<colgroup>
+									<col width="10%" />
+									<col width="40%" />
+									<col width="20%" />
+									<col width="20%" />
+									<col width="10%" />
+								</colgroup>
 								<thead>
 									<tr>
 										<th>순번</th>
@@ -42,20 +51,41 @@
 								</thead>
 								<tbody>
 								<%
-									for (Product product : products) {
+									if (products.isEmpty()) {
 								%>
-										<tr>
-											<td><%=product.getNo() %></td>
-											<td><a href="#"><%=product.getName() %></a></td>
-											<td><%=product.getMaker() %></td>
-											<td><%=product.getPrice() %> 원</td>
-											<td><%=product.getStock() %> 개</td>
-										</tr>
+									<tr>
+										<td colspan="5" class="text-center">상품이 존재하지 않습니다.</td>
+									</tr>						
 								<%
+									} else {
+										for (Product product : products) {
+								%>
+									<tr>
+										<td><%=product.getNo() %></td>
+										<td><a href="detail.jsp?no=<%=product.getNo() %>"><%=product.getName() %></a></td>
+										<td><%=product.getMaker() %></td>
+										<td><%=product.getPrice() %> 원</td>
+										<td><%=product.getStock() %> 개</td>
+									</tr>
+								<%
+										}
 									}
 								%>
-								</tbody>
+									</tbody>
 							</table>
+						</div>
+						<div class="card-body">
+							<nav>
+		  						<ul class="pagination justify-content-center">
+		    						<li class="page-item"><a class="page-link" href="list.jsp?page=2">이전</a></li>
+		    						<li class="page-item"><a class="page-link" href="list.jsp?page=1">1</a></li>
+		    						<li class="page-item"><a class="page-link" href="list.jsp?page=2">2</a></li>
+		    						<li class="page-item active"><a class="page-link" href="list.jsp?page=3">3</a></li>
+		    						<li class="page-item"><a class="page-link" href="list.jsp?page=4">4</a></li>
+		    						<li class="page-item"><a class="page-link" href="list.jsp?page=5">5</a></li>
+		    						<li class="page-item"><a class="page-link" href="list.jsp?page=4">다음</a></li>
+		  						</ul>
+							</nav>
 						</div>
 					</div>
 				</div>

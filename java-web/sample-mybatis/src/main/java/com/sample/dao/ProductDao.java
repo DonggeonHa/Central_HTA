@@ -59,7 +59,7 @@ public class ProductDao {
 	 * SAMPLE_PRODUCTS 테이블의 모든 상품정보를 반환한다.
 	 * @return 상품정보가 여러개 포함된 List객체, 언제나 null이 아니다.
 	 */
-	public List<Product> getAllProduct() {
+	public List<Product> getAllProducts() {
 		SqlSession session = sqlSessionFactory.openSession();
 		List<Product> products = session.selectList("getAllProducts");
 		session.close();
