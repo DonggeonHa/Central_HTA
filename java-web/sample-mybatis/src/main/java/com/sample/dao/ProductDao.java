@@ -1,6 +1,7 @@
 package com.sample.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -56,12 +57,13 @@ public class ProductDao {
 	}
 	
 	/**
-	 * SAMPLE_PRODUCTS 테이블의 모든 상품정보를 반환한다.
-	 * @return 상품정보가 여러개 포함된 List객체, 언제나 null이 아니다.
+	 * 조회조건을 전달받아서 조건에 해당하는 상품정보를 SAMPLE_PRODUCTS 테이블에서 조회해서 반환한다.
+	 * @param condition 조회조건
+	 * @return 상품정보 목록, 조회조건에 해당하는 상품이 존재하지 않으면 빈 List객체가 반환된다.
 	 */
-	public List<Product> getAllProducts() {
+	public List<Product> getProducts(Map<String, Object> condition) {
 		SqlSession session = sqlSessionFactory.openSession();
-		List<Product> products = session.selectList("getAllProducts");
+		List<Product> products = session.selectList("getProducts", condition);
 		session.close();
 		return products;
 	}
@@ -75,10 +77,20 @@ public class ProductDao {
 	}
 	
 	public List<Product> getProductByName(String name) {
-		
 		SqlSession session = sqlSessionFactory.openSession();
 		List<Product> products = session.selectList("getProductByName", name);
 		session.close();
 		return products;
+	}
+	
+	/**
+	 * SAMPLE_PRODUCTS 테이블에 저장된 모든 상품정보의 갯수를 반환한다.
+	 * @return 상품정보 갯수
+	 */
+	public int getRowsCount() {
+		SqlSession session = sqlSessionFactory.openSession();
+		int rowsCount = session.selectOne("getRowsCount");
+		session.close();
+		return rowsCount;
 	}
 }

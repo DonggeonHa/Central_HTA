@@ -21,7 +21,7 @@
 	String name = request.getParameter("name");
 	String maker = request.getParameter("maker");
 	int price = Integer.parseInt(request.getParameter("price"));
-	int discountPrice = (int)(price * 0.9);
+	int discountPrice = (int) Math.round(price * 0.9);
 	
 	Product product = new Product();
 	product.setCategory(category);

@@ -75,6 +75,14 @@ public class Product {
 	public String getSoldOut() {
 		return soldOut;
 	}
+	
+	public String getSoldOutMessage() {
+		if ("N".equals(soldOut)) {
+			return "판매중";
+		}
+		
+		return "품절";
+	}
 
 	public void setSoldOut(String soldOut) {
 		this.soldOut = soldOut;

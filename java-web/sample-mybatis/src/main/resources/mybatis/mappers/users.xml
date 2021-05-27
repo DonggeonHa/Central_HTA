@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="users">
+	
+	<insert id="insertUser" parameterType="com.sample.vo.User">
+		INSERT INTO sample_users
+		(user_id, user_password, user_name, user_email, user_phone)
+		VALUES
+		(#{id}, #{password}, #{name}, #{email}, #{phone})
+	</insert>
+	
+	<select id="getUserById" parameterType="string" resultType="com.sample.vo.User">
+		SELECT
+			user_id 			AS id,
+			user_password 		AS password,
+			user_name 			AS name,
+			user_email 			AS email,
+			user_phone 			AS phone,
+			user_point 			AS point,
+			user_status 		AS status,
+			user_created_date 	AS createdDate
+		FROM sample_users
+		WHERE user_id = #{value}
+	</select>
+</mapper>
