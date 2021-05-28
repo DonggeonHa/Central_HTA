@@ -14,6 +14,8 @@
 <div class="container">
 <%
 	String navItem = "login";
+
+	String failMessage = request.getParameter("fail");
 %>
 	<header>
 		<%@ include file="../common/header.jsp" %>
@@ -25,6 +27,36 @@
 			</div>
 		</div>
 		<div class="row">
+		<%
+			if("blank".equals(failMessage)) {
+		%>
+				<div class="col-6 offset-3">
+					<div class="alert alert-danger">
+						<strong>입력값 누락</strong> 아이디 혹은 비밀번호가 누락되었습니다.
+					</div>			
+				</div>
+		<%
+			} else if("inactive".equals(failMessage)) {
+		%>
+				<div class="col-6 offset-3">
+					<div class="alert alert-danger">
+						<strong>탈퇴한 사용자</strong> 이미 탈퇴처리된 사용자입니다.
+					</div>			
+				</div>
+		<%
+			}
+		%>
+		<%
+			if("invalid".equals(failMessage)) {
+		%>
+				<div class="col-6 offset-3">
+					<div class="alert alert-danger">
+						<strong>로그인 실패</strong> 아이디 혹은 비밀번호가 일치하지 않습니다.
+					</div>			
+				</div>
+		<%
+			}
+		%>
 			<div class="col-6 offset-3">
 				<form method="post" action="login.jsp" class="border p-3 bg-light">
 					<div class="form-group">

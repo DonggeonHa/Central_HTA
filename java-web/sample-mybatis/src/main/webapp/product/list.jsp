@@ -71,11 +71,11 @@
 							<table class="table">
 								<colgroup>
 									<col width="10%" />
-									<col width="35%" />
+									<col width="*%" />
 									<col width="15%" />
+									<col width="13%" />
 									<col width="15%" />
-									<col width="15%" />
-									<col width="10%" />
+									<col width="13%" />
 								</colgroup>
 								<thead>
 									<tr>
@@ -84,7 +84,7 @@
 										<th>제조회사</th>
 										<th class="text-right">가격</th>
 										<th class="text-right">할인가격</th>
-										<th class="text-right">재고</th>
+										<th class="text-right"></th>
 									</tr>
 								</thead>
 								<tbody>
@@ -104,7 +104,9 @@
 										<td><%=product.getMaker() %></td>
 										<td class="text-right"><del><%=CommonUtils.numberToString(product.getPrice()) %></del> 원</td>
 										<td class="text-right"><strong class="text-danger"><%=CommonUtils.numberToString(product.getDiscountPrice()) %></strong> 원</td>
-										<td class="text-right"><%=CommonUtils.numberToString(product.getStock()) %> 개</td>
+										<td class="text-right">
+											<a href="../cart/add.jsp?no=<%=product.getNo()%>" class="btn btn-outline-primary btn-sm">장바구니 담기</a>
+										</td>
 									</tr>
 								<%
 										}
