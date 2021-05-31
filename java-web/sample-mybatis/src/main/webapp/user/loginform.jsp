@@ -14,6 +14,7 @@
 <div class="container">
 <%
 	String navItem = "login";
+	String job = request.getParameter("job");
 
 	String failMessage = request.getParameter("fail");
 %>
@@ -54,6 +55,14 @@
 						<strong>로그인 실패</strong> 아이디 혹은 비밀번호가 일치하지 않습니다.
 					</div>			
 				</div>
+		<%
+			} else if ("deny".equals(failMessage)) {
+		%>
+			<div class="col-6 offset-3">
+				<div class="alert alert-danger">
+					<strong>서비스 거부  [<%=job %>]</strong> 로그인 된 사용자만 이용가능한 서비스입니다.
+				</div>
+			</div>
 		<%
 			}
 		%>
