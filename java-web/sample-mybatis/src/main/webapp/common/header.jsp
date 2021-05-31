@@ -16,7 +16,8 @@
     	<%
     		if (loginedUser != null) {
     	%>
-    			<li class="nav-item"><a class="nav-link" href="#">주문내역</a></li>
+    			<li class="nav-item <%="cart".equals(navItem) ? "active" : ""%>"><a class="nav-link" href="/sample-mybatis/cart/list.jsp">나의 장바구니</a></li>
+    			<li class="nav-item <%="order".equals(navItem) ? "active" : ""%>"><a class="nav-link" href="/sample-mybatis/order/list.jsp">나의 주문내역</a></li>
     	<%
     		}
     	%>

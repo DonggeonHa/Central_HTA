@@ -71,6 +71,7 @@
 	<mappers>
 		<mapper resource="mybatis/mappers/cartItems.xml"/>
 		<mapper resource="mybatis/mappers/products.xml"/>
+		<mapper resource="mybatis/mappers/reviews.xml"/>
 		<mapper resource="mybatis/mappers/users.xml"/>
 	</mappers>
 </configuration>
