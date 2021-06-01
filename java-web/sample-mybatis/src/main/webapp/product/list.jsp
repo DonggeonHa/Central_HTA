@@ -100,12 +100,27 @@
 								%>
 									<tr>
 										<td><%=product.getNo() %></td>
-										<td><a href="detail.jsp?no=<%=product.getNo()%>&page=<%=pageNo%>"><%=product.getName() %></a></td>
+										<td>
+											<a href="detail.jsp?no=<%=product.getNo()%>&page=<%=pageNo%>"><%=product.getName() %></a>
+											<%
+												if (product.getReviewCnt() != 0) {
+											%>
+													<span class="badge badge-info"><%=product.getReviewCnt()%></span>
+											<%
+												}
+											%>
+										</td>
 										<td><%=product.getMaker() %></td>
 										<td class="text-right"><del><%=CommonUtils.numberToString(product.getPrice()) %></del> 원</td>
 										<td class="text-right"><strong class="text-danger"><%=CommonUtils.numberToString(product.getDiscountPrice()) %></strong> 원</td>
 										<td class="text-right">
-											<a href="../cart/add.jsp?no=<%=product.getNo()%>" class="btn btn-outline-primary btn-sm">장바구니 담기</a>
+											<%
+												if ("판매중".equals(product.getSoldOutMessage())) {
+											%>
+													<a href="../cart/add.jsp?no=<%=product.getNo()%>" class="btn btn-outline-primary btn-sm">장바구니 담기</a>
+											<%
+												}
+											%>
 										</td>
 									</tr>
 								<%

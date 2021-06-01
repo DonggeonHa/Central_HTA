@@ -13,6 +13,7 @@ public class Product {
 	private int stock;
 	private String soldOut;
 	private Date createdDate;
+	private int reviewCnt;
 	
 	public Product() {}
 
@@ -95,5 +96,12 @@ public class Product {
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
-	
+
+	public int getReviewCnt() {
+		return reviewCnt;
+	}
+
+	public void setReviewCnt(int reviewCnt) {
+		this.reviewCnt = reviewCnt;
+	}
 }

@@ -1,3 +1,6 @@
+<%@page import="com.sample.vo.Board"%>
+<%@page import="com.sample.dao.BoardDao"%>
+<%@page import="com.sample.util.CommonUtils"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -14,6 +17,13 @@
 <div class="container">
 <%
 	String navItem = "board";
+	User sqlSessionSavedUser = (User) session.getAttribute("LOGINED_USER_INFO");
+
+	int no = CommonUtils.stringToInt(request.getParameter("no"));
+	int pageNo = CommonUtils.stringToInt(request.getParameter("page"));
+	
+	BoardDao boardDao = BoardDao.getInstance();
+	Board board = boardDao.getBoardByNo(no);
 %>
 	<header>
 		<%@ include file="../common/header.jsp" %>
@@ -34,27 +44,33 @@
 						<col width="35%">
 					</colgroup>
 					<tr>
-						<th class="bg-light">글번호</th><td>10</td>
-						<th class="bg-light">조회수</th><td>3</td>
+						<th class="bg-light">글번호</th><td><%=board.getNo() %></td>
+						<th class="bg-light">조회수</th><td><%=board.getViewCount()%></td>
 					</tr>
 					<tr>
-						<th class="bg-light">제목</th><td colspan="3">게시글 연습1</td>
+						<th class="bg-light">제목</th><td colspan="3"><%=board.getTitle()%></td>
 					</tr>
 					<tr>
-						<th class="bg-light">작성자</th><td>홍길동</td>
-						<th class="bg-light">등록일</th><td>2021-05-31</td>
+						<th class="bg-light">작성자</th><td><%=board.getUserId() %></td>
+						<th class="bg-light">등록일</th><td><%=CommonUtils.dateToString(board.getCreatedDate()) %></td>
 					</tr>
 					<tr>
 						<th class="bg-light">내용</th>
 						<td colspan="3">
-							<textarea rows="6" class="form-control bg-white p-0 border-0" readonly>게시판 글쓰기 연습입니다.</textarea>
+							<textarea rows="6" class="form-control bg-white p-0 border-0" readonly><%=board.getContent()%></textarea>
 						</td>
 					</tr>
 				</table>
 				<div>
-					<a href="" class="btn btn-warning">수정</a>
-					<a href="" class="btn btn-danger">삭제</a>
-					<a href="" class="btn btn-primary float-right">목록</a>
+				<%
+					if (loginedUser.getId().equals(board.getUserId())) { 
+				%>
+						<a href="update.jsp?no=<%=board.getNo()%>&page=<%=pageNo %>" class="btn btn-warning">수정</a>
+						<a href="delete.jsp?no=<%=board.getNo()%>" class="btn btn-danger">삭제</a>
+				<%
+					}
+				%>
+					<a href="list.jsp" class="btn btn-primary float-right">목록</a>
 				</div>
 			</div>
 		</div>

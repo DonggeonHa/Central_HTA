@@ -1,3 +1,7 @@
+<%@page import="com.sample.util.CommonUtils"%>
+<%@page import="com.sample.vo.Board"%>
+<%@page import="java.util.List"%>
+<%@page import="com.sample.dao.BoardDao"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -14,6 +18,9 @@
 <div class="container">
 <%
 	String navItem = "board";
+	
+	BoardDao boardDao = BoardDao.getInstance();
+	List<Board> boards = boardDao.getAllBoards();
 %>
 	<header>
 		<%@ include file="../common/header.jsp" %>
@@ -49,27 +56,19 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr>
-									<td>1</td>
-									<td><a href="detail.jsp?no=1&page=1">게시글 연습1</a></td>
-									<td>관리자</td>
-									<td>10</td>
-									<td>2021-05-31</td>
-								</tr>
-								<tr>
-									<td>2</td>
-									<td><a href="detail.jsp?no=2&page=1">게시글 연습2</a></td>
-									<td>관리자</td>
-									<td>10</td>
-									<td>2021-05-31</td>
-								</tr>
-								<tr>
-									<td>3</td>
-									<td><a href="detail.jsp?no=2&page=1">게시글 연습3</a></td>
-									<td>관리자</td>
-									<td>10</td>
-									<td>2021-05-31</td>
-								</tr>
+							<%
+								for (Board board : boards) {
+							%>
+									<tr>
+										<td><%=board.getNo()%></td>
+										<td><a href="detail.jsp?no=<%=board.getNo()%>&page=1"><%=board.getTitle() %></a></td>
+										<td><%=board.getUserId()%></td>
+										<td><%=board.getViewCount()%></td>
+										<td><%=CommonUtils.dateToString(board.getCreatedDate()) %></td>
+									</tr>
+							<%
+								}
+							%>
 							</tbody>
 						</table>
 					</div>

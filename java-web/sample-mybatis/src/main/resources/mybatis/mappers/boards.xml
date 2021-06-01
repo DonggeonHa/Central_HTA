@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="boards">
+
+	<insert id="insertBoard" parameterType="com.sample.vo.Board">
+		INSERT INTO sample_boards
+		(board_no, board_title, board_content, user_id)
+		VALUES
+		(board_seq.nextval, #{title}, #{content}, #{userId})
+	</insert>
+	
+	<update id="updateBoard" parameterType="com.sample.vo.Board">
+		UPDATE sample_boards
+		SET
+			board_title = #{title},
+			board_content = #{content},
+			board_view_count = #{viewCount},
+			board_updated_date = SYSDATE
+		WHERE board_no = #{no}
+	</update>
+	
+	<update id="deleteBoard" parameterType="int">
+		UPDATE sample_boards
+		SET
+			board_deleted = 'Y',
+			board_deleted_date = SYSDATE
+		WHERE board_no = #{no}	
+	</update>
+	
+	<select id="getAllBoards" resultType="com.sample.vo.Board">
+		SELECT board_no 		  as no,
+			   board_title 		  as title,
+			   board_content 	  as content,
+			   board_view_count   as viewCount,
+			   board_deleted 	  as deleted,
+			   user_id 			  as userId,
+			   board_created_date as createdDate,
+			   board_updated_date as updatedDate,
+			   board_deleted_date as deletedDate
+		FROM sample_boards
+		WHERE board_deleted = 'N'
+		ORDER BY board_no DESC
+	</select>
+	
+	<select id="getBoardRowsCount" resultType="int">
+		SELECT count(*)
+		FROM sample_boards
+		WHERE board_deleted = 'N'
+	</select>
+	
+	<select id="getBoardByNo" parameterType="int" resultType="com.sample.vo.Board">
+		SELECT board_no 		  as no,
+			   board_title 		  as title,
+			   board_content 	  as content,
+			   board_view_count   as viewCount,
+			   board_deleted 	  as deleted,
+			   user_id 			  as userId,
+			   board_created_date as createdDate,
+			   board_updated_date as updatedDate,
+			   board_deleted_date as deletedDate
+		FROM sample_boards
+		WHERE board_no = #{value}
+	</select>
+	
+<!-- 	<select id="getAllBoards" parameterType="map" resultType="com.sample.vo.Board"> -->
+<!-- 		SELECT board_no 		  as no, -->
+<!-- 			   board_title 		  as title, -->
+<!-- 			   board_content 	  as content, -->
+<!-- 			   board_view_count   as viewCount, -->
+<!-- 			   board_deleted 	  as deleted, -->
+<!-- 			   user_id 			  as userId, -->
+<!-- 			   board_created_date as createdDate, -->
+<!-- 			   board_updated_date as updatedDate, -->
+<!-- 			   board_deleted_date as deletedDate -->
+<!-- 		FROM (SELECT row_number() OVER (order by A.board_no DESC) rn, A.* -->
+<!--       		  FROM sample_boards A -->
+<!--       		  WHERE A.board_deleted = 'N') -->
+<!-- 		WHERE rn BETWEEN #{beginIndex} AND #{endIndex} -->
+<!-- 		ORDER BY board_no DESC -->
+<!-- 	</select> -->
+	
+</mapper>

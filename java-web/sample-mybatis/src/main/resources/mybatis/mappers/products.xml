@@ -65,7 +65,8 @@
 			product_price = #{price},
 			product_discount_price = #{discountPrice},
 			product_stock = #{stock},
-			product_sold_out = #{soldOut}
+			product_sold_out = #{soldOut},
+			product_review_cnt = #{reviewCnt}
 		WHERE product_no = #{no}
 	</update>
 	
@@ -107,7 +108,8 @@
 			    product_discount_price as discountPrice, 
 			    product_stock as stock, 
 			    product_sold_out as soldOut, 
-			    product_created_date as createdDate
+			    product_created_date as createdDate,
+			    product_review_cnt as reviewCnt
 		FROM (SELECT row_number() OVER (ORDER BY product_no DESC) row_no, A.*
 			  FROM sample_products A)
 		WHERE row_no BETWEEN #{beginIndex} AND #{endIndex}
@@ -144,7 +146,8 @@
 			    product_discount_price as discountPrice, 
 			    product_stock as stock, 
 			    product_sold_out as soldOut, 
-			    product_created_date as createdDate
+			    product_created_date as createdDate,
+			    product_review_cnt as reviewCnt
 		FROM sample_products
 		WHERE product_no = #{value}
 	</select>
@@ -158,7 +161,8 @@
 			    product_discount_price as discountPrice, 
 			    product_stock as stock, 
 			    product_sold_out as soldOut, 
-			    product_created_date as createdDate
+			    product_created_date as createdDate,
+			    product_review_cnt as reviewCnt
 		FROM sample_products
 		WHERE product_name like '%' || #{value} || '%'
 	</select>

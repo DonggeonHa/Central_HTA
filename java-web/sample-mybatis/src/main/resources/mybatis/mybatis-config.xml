@@ -69,6 +69,7 @@
 	
 	<!-- 사용자정의 매퍼파일 등록 -->
 	<mappers>
+		<mapper resource="mybatis/mappers/boards.xml"/>
 		<mapper resource="mybatis/mappers/cartItems.xml"/>
 		<mapper resource="mybatis/mappers/products.xml"/>
 		<mapper resource="mybatis/mappers/reviews.xml"/>
