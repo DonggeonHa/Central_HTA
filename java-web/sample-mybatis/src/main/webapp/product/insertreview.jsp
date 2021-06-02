@@ -5,8 +5,7 @@
 <%@page import="com.sample.dao.ReviewDao"%>
 <%@page import="com.sample.vo.Review"%>
 <%@page import="com.sample.util.CommonUtils"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <%
 	//클라이언트 전용의 세션객체에서 저장된 사용자정보 조회

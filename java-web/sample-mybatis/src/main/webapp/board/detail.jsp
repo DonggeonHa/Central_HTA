@@ -24,6 +24,9 @@
 	
 	BoardDao boardDao = BoardDao.getInstance();
 	Board board = boardDao.getBoardByNo(no);
+	
+	board.setViewCount(board.getViewCount() + 1);
+	boardDao.updateBoard(board);
 %>
 	<header>
 		<%@ include file="../common/header.jsp" %>
@@ -65,7 +68,7 @@
 				<%
 					if (loginedUser.getId().equals(board.getUserId())) { 
 				%>
-						<a href="update.jsp?no=<%=board.getNo()%>&page=<%=pageNo %>" class="btn btn-warning">수정</a>
+						<a href="modifyform.jsp?no=<%=board.getNo()%>&page=<%=pageNo %>" class="btn btn-warning">수정</a>
 						<a href="delete.jsp?no=<%=board.getNo()%>" class="btn btn-danger">삭제</a>
 				<%
 					}

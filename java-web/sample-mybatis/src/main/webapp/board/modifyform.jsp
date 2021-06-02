@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-	<title>상풀물 :: 고객게시판</title>
+	<title>상품몰 :: 고객게시판</title>
  	<meta charset="utf-8">
   	<meta name="viewport" content="width=device-width, initial-scale=1">
   	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -29,7 +29,7 @@
 	<main>
 		<div class="row mb-3"> 
 			<div class="col-12">
-				<h3 class="border p-3 bg-light">새 게시글 등록폼</h3>
+				<h3 class="border p-3 bg-light">수정할 게시글 등록폼</h3>
 			</div>
 		</div>
 		<div class="row">
@@ -37,6 +37,7 @@
 				<form method="post" action="modify.jsp" class="border p-3 bg-light">
 					<input type="hidden" name="no" value="<%=board.getNo()%>">
 					<input type="hidden" name="page" value="<%=pageNo%>">
+					<input type="hidden" name="viewCount" value="<%=board.getViewCount()%>" />
 					<div class="form-group">
 						<label>제목</label>
 						<input type="text" class="form-control" name="title" value="<%=board.getTitle()%>"/>

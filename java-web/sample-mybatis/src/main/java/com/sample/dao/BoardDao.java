@@ -27,6 +27,18 @@ public class BoardDao {
 		session.close();
 	}
 	
+	public void updateBoard(Board board) {
+		SqlSession session = sqlSessionFactory.openSession(true);
+		session.update("updateBoard", board);
+		session.close();
+	}
+	
+	public void deleteBoard(int no) {
+		SqlSession session = sqlSessionFactory.openSession(true);
+		session.update("deleteBoard", no);
+		session.close();
+	}
+	
 	public List<Board> getAllBoards() {
 		SqlSession session = sqlSessionFactory.openSession();
 		List<Board> boards = session.selectList("getAllBoards");
