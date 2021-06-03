@@ -9,7 +9,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-// Servlet를 제작할때는 항상 httpServlet를 상속받는다.
+// Servlet를 제작할때는 항상 HttpServlet를 상속받는다.
 @WebServlet("/hello")
 public class HelloServlet extends HttpServlet {
 

@@ -16,12 +16,19 @@
 	<body>
 		<div class="container">
 			<div class="row mt-3">
-				<div class="col-12">
+				<div class="col-4">
 					<h3>서블릿 실행하기</h3>
 					<ul class="list-group">
 						<li class="list-group-item"><a href="hello?name=홍길동">HelloServlet 실행하기</a></li>
 						<li class="list-group-item"><a href="hello?name=김유신">HelloServlet 실행하기</a></li>
 						<li class="list-group-item"><a href="hello?name=이순신">HelloServlet 실행하기</a></li>
+					</ul>
+				</div>
+				<div class="col-4">
+					<h3>속성과 스코프</h3>
+					<ul class="list-group">
+						<li class="list-group-item"><a href="scope1">스코프 테스트하기1(리다이렉션)</a></li>
+						<li class="list-group-item"><a href="scope2">스코프 테스트하기2(포워딩)</a></li>
 					</ul>
 				</div>
 			</div>

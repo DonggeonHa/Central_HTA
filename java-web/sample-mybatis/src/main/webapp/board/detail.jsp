@@ -27,6 +27,7 @@
 	
 	board.setViewCount(board.getViewCount() + 1);
 	boardDao.updateBoard(board);
+	
 %>
 	<header>
 		<%@ include file="../common/header.jsp" %>
@@ -66,14 +67,20 @@
 				</table>
 				<div>
 				<%
-					if (loginedUser.getId().equals(board.getUserId())) { 
+					try {
+						if (board.getUserId().equals(loginedUser.getId())) { 
 				%>
-						<a href="modifyform.jsp?no=<%=board.getNo()%>&page=<%=pageNo %>" class="btn btn-warning">수정</a>
-						<a href="delete.jsp?no=<%=board.getNo()%>" class="btn btn-danger">삭제</a>
+							<a href="modifyform.jsp?no=<%=board.getNo()%>&page=<%=pageNo %>" class="btn btn-warning">수정</a>
+							<a href="delete.jsp?no=<%=board.getNo()%>" class="btn btn-danger">삭제</a>
+							<a href="list.jsp" class="btn btn-primary float-right">목록</a>
+				<%
+						}
+					} catch(NullPointerException e) {
+				%>
+						<a href="list.jsp" class="btn btn-primary float-right">목록</a>
 				<%
 					}
 				%>
-					<a href="list.jsp" class="btn btn-primary float-right">목록</a>
 				</div>
 			</div>
 		</div>

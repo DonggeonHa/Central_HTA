@@ -62,8 +62,12 @@ public class FileUploadServlet extends HttpServlet {
 		// 	  * 서버로 업로드된 첨부파일은 서버의 임시디렉토리에 임시파일(xxxxxxxx.tmp)의 형태로 저장되어 있음
 		// File객체 생성 : 지정된 디렉토리와 파일명에 대한 정보를 가지는 객체다
 		//					실제로 존재하지 않는 파일에 대해서도 객체 생성이 가능하다.
-		InputStream in = part.getInputStream();
+		
+		// 첨부파일을 디스크에 저장하는 출력스트림 생성
 		OutputStream out = new FileOutputStream(new File(saveDirectory, filename));
+		// 임시폴더에 저장된 첨부파일을 읽어오는 스트림 획득
+		InputStream in = part.getInputStream();
+		// 입력스트림으로 읽어온 데이터를 출력스트림으로 출력시켜서 파일을 복사한다.
 		IOUtils.copy(in, out);
 		out.close();
 		
