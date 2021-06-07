@@ -31,6 +31,18 @@
 						<li class="list-group-item"><a href="scope2">스코프 테스트하기2(포워딩)</a></li>
 					</ul>
 				</div>
+				<div class="col-3">
+					<h3>EL 연습</h3>
+					<ul class="list-group">
+						<li class="list-group-item"><a href="el">EL 연습하기</a></li>
+					</ul>
+				</div>
+				<div class="col-3">
+					<h3>JSTL 연습</h3>
+					<ul class="list-group">
+						<li class="list-group-item"><a href="core">JSTL 연습하기</a></li>
+					</ul>
+				</div>
 			</div>
 		<%
 			FileItemDao fileItemDao = FileItemDao.getInstance();
