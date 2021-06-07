@@ -1,0 +1,115 @@
+CREATE TABLE SAMPLE_SCHOOL_DEPARTMENTS(
+    DEPARTMENT_NO NUMBER(8) CONSTRAINT SCHOOL_DEPT_NO_PK PRIMARY KEY,
+    DEPARTMENT_NAME VARCHAR2(255) NOT NULL
+);
+
+CREATE TABLE SAMPLE_SCHOOL_PROFESSORS(
+    PROFESSOR_ID VARCHAR2(20) CONSTRAINT SCHOOL_PROF_NO_PK PRIMARY KEY,
+    PROFESSOR_PASSWORD CHAR(64) NOT NULL,
+    PROFESSOR_NAME VARCHAR2(255) NOT NULL,
+    PROFESSOR_POSITION VARCHAR2(255) NOT NULL CONSTRAINT SCHOOL_PROF_POSITION_CK CHECK(PROFESSOR_POSITION IN ('정교수', '부교수', '조교수')),
+    DEPARTMENT_NO NUMBER(8) NOT NULL CONSTRAINT SCHOOL_PROF_DEPTNO_FK REFERENCES SAMPLE_SCHOOL_DEPARTMENTS (DEPARTMENT_NO),
+    PROFESSOR_CREATED_DATE DATE DEFAULT SYSDATE
+);
+
+CREATE TABLE SAMPLE_SCHOOL_COURSES (
+    COURSE_NO NUMBER(8) CONSTRAINT SCHOOL_COURSE_NO_PK PRIMARY KEY,
+    COURSE_NAME VARCHAR2(255) NOT NULL,
+    COURSE_TYPE VARCHAR2(255) NOT NULL CONSTRAINT SCHOOL_COURSE_TYPE_CK CHECK (COURSE_TYPE IN ('교양선택', '교양필수', '전공선택', '전공필수')),
+    COURSE_YEAR NUMBER(4) DEFAULT TO_NUMBER(TO_CHAR(SYSDATE, 'YYYY')),
+    COURSE_TERM NUMBER(1) NOT NULL CONSTRAINT SCHOOL_COURSE_TERM_CK CHECK (COURSE_TERM  IN (1, 2)),
+    COURSE_QUOTA NUMBER(3) DEFAULT 30,
+    COURSE_ROOM VARCHAR2(255) NOT NULL,
+    COURSE_BUILDING VARCHAR2(255) NOT NULL,
+    COURSE_AVAILABLE CHAR(1) DEFAULT 'Y', 
+    COURSE_REGISTERED_COUNT NUMBER(3) DEFAULT 0,
+    PROFESSOR_ID VARCHAR2(20) NOT NULL CONSTRAINT SCHOOL_COURSE_PROFID_FK REFERENCES SAMPLE_SCHOOL_PROFESSORS (PROFESSOR_ID),
+    DEPARTMENT_NO NUMBER(8) NOT NULL CONSTRAINT SCHOOL_COURSE_DEPTNO_FK REFERENCES SAMPLE_SCHOOL_DEPARTMENTS (DEPARTMENT_NO),
+    COURSE_CREATED_DATE DATE DEFAULT SYSDATE
+);
+
+CREATE TABLE SAMPLE_SCHOOL_STUDENTS (
+    STUDENT_ID VARCHAR2(20) CONSTRAINT SCHOOL_STUD_ID_PK PRIMARY KEY,
+    STUDENT_NAME VARCHAR2(255) NOT NULL,
+    STUDENT_PASSWORD CHAR(64) NOT NULL,
+    STUDENT_GRADE NUMBER(1) CONSTRAINT SCHOOL_STUD_GRADE_CK CHECK (STUDENT_GRADE IN (1, 2, 3, 4)),
+    DEPARTMENT_NO NUMBER(8) NOT NULL CONSTRAINT SCHOOL_STUD_DEPTNO_FK REFERENCES SAMPLE_SCHOOL_DEPARTMENTS (DEPARTMENT_NO),
+    STUDENT_CREATED_DATE DATE DEFAULT SYSDATE
+);
+
+CREATE TABLE SAMPLE_SCHOOL_REGISTRATIONS (
+    REGISTRATION_NO NUMBER(8) CONSTRAINT SCHOOL_REGNO_PK PRIMARY KEY,
+    COURSE_NO NUMBER(8) NOT NULL CONSTRAINT SCHOOL_REG_COURSENO_FK REFERENCES SAMPLE_SCHOOL_COURSES (COURSE_NO),
+    REGISTRATION_YEAR NUMBER(4) NOT NULL,
+    REGISTRATION_TERM NUMBER(1) NOT NULL CONSTRAINT SCHOOL_REG_TERM_CK CHECK (REGISTRATION_TERM  IN (1, 2)),
+    STUDENT_ID VARCHAR2(20) NOT NULL CONSTRAINT SCHOOL_REG_STUDID_FK REFERENCES SAMPLE_SCHOOL_STUDENTS (STUDENT_ID),
+    COURSE_SCORE NUMBER(3) DEFAULT 0,
+    COURSE_GRADE CHAR(1) CONSTRAINT SCHOOL_REG_GRADE_CK CHECK (COURSE_GRADE IN ('A', 'B', 'C', 'D', 'F')),
+    REGISTRATION_STATUS VARCHAR2(255) DEFAULT '신청' CONSTRAINT SCHOOOL_REG_COMPLETED_CK CHECK (REGISTRATION_STATUS IN ('신청', '취소')),
+    COURSE_PASSED CHAR(1) DEFAULT 'N' CONSTRAINT SCHOOL_PASS_CK CHECK (COURSE_PASSED IN ('N', 'Y')),
+    REGISTRATION_CREATED_DATE DATE DEFAULT  SYSDATE,
+    CONSTRAINT SCHOOL_REG_COURSE_UK UNIQUE (STUDENT_ID, COURSE_NO, REGISTRATION_YEAR, REGISTRATION_TERM)
+);
+
+create sequence course_seq start with 10000000 nocache;
+create sequence department_seq start with 20000000 nocache;
+create sequence professor_seq start with 30000000 nocache;
+create sequence registration_seq start with 40000000 nocache;
+create sequence room_seq start with 50000000 nocache;
+create sequence student_seq start with 60000000 nocache;
+
+INSERT INTO SAMPLE_SCHOOL_DEPARTMENTS VALUES (DEPARTMENT_SEQ.NEXTVAL, '전기공학과');
+INSERT INTO SAMPLE_SCHOOL_DEPARTMENTS VALUES (DEPARTMENT_SEQ.NEXTVAL, '기계공학과');
+INSERT INTO SAMPLE_SCHOOL_DEPARTMENTS VALUES (DEPARTMENT_SEQ.NEXTVAL, '정보시스템학과');
+INSERT INTO SAMPLE_SCHOOL_DEPARTMENTS VALUES (DEPARTMENT_SEQ.NEXTVAL, '컴퓨터소프트웨어학부');
+COMMIT;
+
+INSERT INTO SAMPLE_SCHOOL_PROFESSORS VALUES('sungth', 'bef9bc5fb772c39fb335768e85bb188470130a65fe1ee92463827127b4d0670f', '성태현', '정교수', 20000000, sysdate);
+INSERT INTO SAMPLE_SCHOOL_PROFESSORS VALUES('leej', 'bef9bc5fb772c39fb335768e85bb188470130a65fe1ee92463827127b4d0670f', '이주', '정교수', 20000000, sysdate);
+INSERT INTO SAMPLE_SCHOOL_PROFESSORS VALUES('jungjw', 'bef9bc5fb772c39fb335768e85bb188470130a65fe1ee92463827127b4d0670f', '정진욱', '정교수', 20000000, sysdate);
+
+INSERT INTO SAMPLE_SCHOOL_PROFESSORS VALUES('junggs', 'bef9bc5fb772c39fb335768e85bb188470130a65fe1ee92463827127b4d0670f', '정규선', '정교수', 20000001, sysdate);
+INSERT INTO SAMPLE_SCHOOL_PROFESSORS VALUES('kimjo', 'bef9bc5fb772c39fb335768e85bb188470130a65fe1ee92463827127b4d0670f', '김진오', '정교수', 20000001, sysdate);
+INSERT INTO SAMPLE_SCHOOL_PROFESSORS VALUES('jungjj', 'bef9bc5fb772c39fb335768e85bb188470130a65fe1ee92463827127b4d0670f', '정정주', '정교수', 20000001, sysdate);
+
+INSERT INTO SAMPLE_SCHOOL_PROFESSORS VALUES('kokc', 'bef9bc5fb772c39fb335768e85bb188470130a65fe1ee92463827127b4d0670f', '고광철', '정교수', 20000002, sysdate);
+INSERT INTO SAMPLE_SCHOOL_PROFESSORS VALUES('kimly', 'bef9bc5fb772c39fb335768e85bb188470130a65fe1ee92463827127b4d0670f', '김래영', '부교수', 20000002, sysdate);
+INSERT INTO SAMPLE_SCHOOL_PROFESSORS VALUES('leehc', 'bef9bc5fb772c39fb335768e85bb188470130a65fe1ee92463827127b4d0670f', '이형철', '정교수', 20000002, sysdate);
+
+INSERT INTO SAMPLE_SCHOOL_PROFESSORS VALUES('choijw', 'bef9bc5fb772c39fb335768e85bb188470130a65fe1ee92463827127b4d0670f', '최준원', '정교수', 20000003, sysdate);
+INSERT INTO SAMPLE_SCHOOL_PROFESSORS VALUES('baesw', 'bef9bc5fb772c39fb335768e85bb188470130a65fe1ee92463827127b4d0670f', '배성우', '부교수', 20000003, sysdate);
+INSERT INTO SAMPLE_SCHOOL_PROFESSORS VALUES('moonj', 'bef9bc5fb772c39fb335768e85bb188470130a65fe1ee92463827127b4d0670f', '문준', '부교수', 20000003, sysdate);
+commit;
+
+insert into sample_school_courses values (course_seq.nextval, '공업수학1', '전공필수', 2021, 2, 30, '101호', '공대1호관', 'Y', 0, 'sungth', 20000000, sysdate);
+insert into sample_school_courses values (course_seq.nextval, '전기기초실험1', '전공필수', 2021, 2, 30, '102호', '공대1호관', 'Y', 0, 'sungth', 20000000, sysdate);
+insert into sample_school_courses values (course_seq.nextval, '전자기학', '전공필수', 2021, 2, 30, '103호', '공대1호관', 'Y', 0, 'leej', 20000000, sysdate);
+insert into sample_school_courses values (course_seq.nextval, '현대물리학', '전공선택', 2021, 2, 30, '104호', '공대1호관', 'Y', 0, 'leej', 20000000, sysdate);
+insert into sample_school_courses values (course_seq.nextval, '회로이론', '전공필수', 2021, 2, 30, '105호', '공대1호관', 'Y', 0, 'jungjw', 20000000, sysdate);
+insert into sample_school_courses values (course_seq.nextval, '공업수학2', '전공필수', 2021, 2, 30, '106호', '공대1호관', 'Y', 0, 'jungjw', 20000000, sysdate);
+
+insert into sample_school_courses values (course_seq.nextval, '일반화학및실험1', '전공필수', 2021, 2, 30, '201호', '공대2호관', 'Y', 0, 'junggs', 20000001, sysdate);
+insert into sample_school_courses values (course_seq.nextval, '공학입문설계', '전공필수', 2021, 2, 30, '202호', '공대2호관', 'Y', 0, 'junggs', 20000001, sysdate);
+insert into sample_school_courses values (course_seq.nextval, '미분적분학1', '전공선택', 2021, 2, 30, '203호', '공대2호관', 'Y', 0, 'kimjo', 20000001, sysdate);
+insert into sample_school_courses values (course_seq.nextval, '정역학', '전공필수', 2021, 2, 30, '204호', '공대2호관', 'Y', 0, 'kimjo', 20000001, sysdate);
+insert into sample_school_courses values (course_seq.nextval, '입반물리학및실험2', '전공필수', 2021, 2, 30, '205호', '공대2호관', 'Y', 0, 'jungjj', 20000001, sysdate);
+insert into sample_school_courses values (course_seq.nextval, '기계융합1', '전공선택', 2021, 2, 30, '206호', '공대2호관', 'Y', 0, 'jungjj', 20000001, sysdate);
+
+insert into sample_school_courses values (course_seq.nextval, '전산학개론', '전공필수', 2021, 2, 30, '301호', '공대3호관', 'Y', 0, 'kokc', 20000002, sysdate);
+insert into sample_school_courses values (course_seq.nextval, 'C프로그래밍', '전공필수', 2021, 2, 30, '302호', '공대3호관', 'Y', 0, 'kokc', 20000002, sysdate);
+insert into sample_school_courses values (course_seq.nextval, '데이터구조', '전공필수', 2021, 2, 30, '303호', '공대3호관', 'Y', 0, 'kimly', 20000002, sysdate);
+insert into sample_school_courses values (course_seq.nextval, '정보시스템개론', '전공선택', 2021, 2, 30, '304호', '공대3호관', 'Y', 0, 'kimly', 20000002, sysdate);
+insert into sample_school_courses values (course_seq.nextval, '컴퓨터구조1', '전공필수', 2021, 2, 30, '305호', '공대3호관', 'Y', 0, 'leehc', 20000002, sysdate);
+insert into sample_school_courses values (course_seq.nextval, '알고리즘분석', '전공선택', 2021, 2, 30, '306호', '공대3호관', 'Y', 0, 'leehc', 20000002, sysdate);
+
+insert into sample_school_courses values (course_seq.nextval, '확률통계론', '전공필수', 2021, 2, 30, '401호', '공대4호관', 'Y', 0, 'choijw', 20000003, sysdate);
+insert into sample_school_courses values (course_seq.nextval, '디지털논리', '전공선택', 2021, 2, 30, '402호', '공대4호관', 'Y', 0, 'choijw', 20000003, sysdate);
+insert into sample_school_courses values (course_seq.nextval, '객체지향시스템설계', '전공필수', 2021, 2, 30, '403호', '공대4호관', 'Y', 0, 'baesw', 20000003, sysdate);
+insert into sample_school_courses values (course_seq.nextval, '운영체제', '전공필수', 2021, 2, 30, '404호', '공대4호관', 'Y', 0, 'baesw', 20000003, sysdate);
+insert into sample_school_courses values (course_seq.nextval, '소트트웨어공학', '전공필수', 2021, 2, 30, '405호', '공대4호관', 'Y', 0, 'moonj', 20000003, sysdate);
+insert into sample_school_courses values (course_seq.nextval, '컴퓨터그래픽스', '전공필수', 2021, 2, 30, '406호', '공대4호관', 'Y', 0, 'moonj', 20000003, sysdate);
+commit;
+
+
+
+
