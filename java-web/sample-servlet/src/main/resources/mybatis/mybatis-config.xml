@@ -70,5 +70,7 @@
 	<!-- 사용자정의 매퍼파일 등록 -->
 	<mappers>
 		<mapper resource="mybatis/mappers/repositories.xml"/>
+		<mapper resource="mybatis/mappers/todos.xml"/>
+		<mapper resource="mybatis/mappers/users.xml"/>
 	</mappers>
 </configuration>

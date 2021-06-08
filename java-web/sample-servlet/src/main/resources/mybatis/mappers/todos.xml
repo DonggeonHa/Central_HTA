@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="todos">
+
+	<select id="getNewTodos" resultType="com.sample.vo.Todo">
+		select *
+		from (select
+			  	todo_no					as no,
+			  	todo_title				as title,
+			  	todo_writer				as writer,
+			  	todo_day				as day,
+			  	todo_status				as status,
+			  	todo_text				as text,
+				todo_created_date		as createdDate,
+				todo_completed_date		as compledDate,
+				todo_deleted_date		as deletedDate
+			  from
+				sample_todos
+			  order by 
+				todo_no desc)
+		where 
+			rownum &lt;= 5
+	</select>
+	
+	<select id="getTodosByUserId" parameterType="string" resultType="com.sample.vo.Todo">
+		select
+	  		todo_no					as no,
+	  		todo_title				as title,
+	  		todo_writer				as writer,
+	  		todo_day				as day,
+	  		todo_status				as status,
+	  		todo_text				as text,
+			todo_created_date		as createdDate,
+			todo_completed_date		as compledDate,
+			todo_deleted_date		as deletedDate
+		from
+			sample_todos
+		where
+			todo_writer = #{value}
+		order by
+			todo_no desc
+	</select>
+	
+	<select id="getTodoByNo" parameterType="int" resultType="com.sample.vo.Todo">
+		select
+	  		todo_no					as no,
+	  		todo_title				as title,
+	  		todo_writer				as writer,
+	  		todo_day				as day,
+	  		todo_status				as status,
+	  		todo_text				as text,
+			todo_created_date		as createdDate,
+			todo_completed_date		as compledDate,
+			todo_deleted_date		as deletedDate
+		from
+			sample_todos
+		where
+			todo_no = #{value}
+	</select>
+	
+	<update id="updateTodo" parameterType="com.sample.vo.Todo">
+		update sample_todos
+		set
+			todo_title = #{title},
+			todo_day = #{day},
+			todo_status = #{status},
+			todo_text = #{text},
+			todo_completed_date = #{completedDate},
+			todo_deleted_date = #{deletedDate}
+		where
+			todo_no = #{no}
+	</update>
+	
+</mapper>
+
+
+
+
+
+
