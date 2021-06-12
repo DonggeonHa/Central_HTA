@@ -1,7 +1,5 @@
 package com.sample.school.dao;
 
-import java.util.List;
-
 import org.apache.ibatis.session.SqlSessionFactory;
 
 import com.sample.school.utils.MybatisUtils;
@@ -24,7 +22,7 @@ public class StudentDao {
 	 * @param studentId 학생아이디
 	 * @return 학생정보
 	 */
-	public List<Student> getStudentById(String studentId) {
+	public Student getStudentById(String studentId) {
 		return null;
 	}
 }

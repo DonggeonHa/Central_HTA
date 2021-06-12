@@ -2,8 +2,8 @@ package com.sample.school.vo;
 
 public class LoginUser {
 
-	// 로그인한 학생번호 혹은 교수번호가 대입된다.
-	private int no;
+	// 로그인한 학생아이디 혹은 교수아이디가 대입된다.
+	private String id;
 	private String name;
 	// 로그인한 회원이 학생이면 student, 교수면 professor이 대입된다.
 	private String userType;
@@ -11,14 +11,14 @@ public class LoginUser {
 	
 	public LoginUser() {}
 
-	public int getNo() {
-		return no;
+	public String getId() {
+		return id;
 	}
-
-	public void setNo(int no) {
-		this.no = no;
+	
+	public void setId(String id) {
+		this.id = id;
 	}
-
+	
 	public String getName() {
 		return name;
 	}
