@@ -25,7 +25,7 @@
 		<mapper resource="mybatis/mappers/departments.xml" />
 		<mapper resource="mybatis/mappers/professors.xml" />
 		<mapper resource="mybatis/mappers/registrations.xml" />
-		<mapper resource="mybatis/mappers/rooms.xml" />
+<!-- 		<mapper resource="mybatis/mappers/rooms.xml" /> -->
 		<mapper resource="mybatis/mappers/students.xml" />
 	</mappers>
 </configuration>

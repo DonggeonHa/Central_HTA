@@ -5,4 +5,22 @@
   
 <mapper namespace="students">
 	
+	<select id="getStudentById" parameterType="string" resultType="com.sample.school.vo.Student">
+		SELECT
+			student_id as id,
+			student_password as password,
+			student_name as name,
+			student_grade as grade,
+			department_no as departmentNo,
+			student_created_date as createdDate
+		FROM 
+			sample_school_students
+		WHERE
+			student_id = #{value}
+	</select>
+	
+	<insert id="insertStudent" parameterType="com.sample.school.vo.Student">
+		INSERT INTO sample_school_students
+		VALUES(#{id}, #{name}, #{password}, #{grade}, #{departmentNo}, sysdate)
+	</insert>
 </mapper>

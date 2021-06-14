@@ -2,6 +2,7 @@ package com.sample.school.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 
 import com.sample.school.utils.MybatisUtils;
@@ -24,6 +25,10 @@ public class DepartmentDao {
 	 * @return 모든 부서정보 목록
 	 */
 	public List<Department> getAllDepartments() {
-		return null;
+		SqlSession session = sqlSessionFactory.openSession();
+		List<Department> departments = session.selectList("getAllDepartments");
+		session.close();
+		
+		return departments;
 	}
 }

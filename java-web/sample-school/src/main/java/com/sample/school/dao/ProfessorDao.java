@@ -1,5 +1,6 @@
 package com.sample.school.dao;
 
+import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 
 import com.sample.school.utils.MybatisUtils;
@@ -22,7 +23,9 @@ public class ProfessorDao {
 	 * @param professor 교수정보
 	 */
 	public void insertProfessor(Professor professor) {
-		
+		SqlSession session = sqlSessionFactory.openSession(true);
+		session.insert("insertProfessor", professor);
+		session.close();
 	}
 	
 	/**
@@ -31,6 +34,10 @@ public class ProfessorDao {
 	 * @return
 	 */
 	public Professor getProfessorById(String professorId) {
-		return null;
+		SqlSession session = sqlSessionFactory.openSession();
+		Professor professor = session.selectOne("getProfessorById", professorId);
+		session.close();
+		
+		return professor;
 	}
 }

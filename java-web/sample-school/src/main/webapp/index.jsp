@@ -18,7 +18,7 @@
 					<p>교수계정은 개설과정 등록, 과정별 수강신청자 현황조회, 성적입력 등이 가능합니다.</p>
 					<p>학생계정은 개설과정 조회, 수강신청, 수강신청내역조회, 성적조회 등이 가능합니다.</p>
 					<div>
-						<a href="/sample_school/loginForm.jsp" class="btn btn-primary btn-lg">로그인</a>
+						<a href="/sample-school/loginForm.jsp" class="btn btn-primary btn-lg">로그인</a>
 					</div>
 				</div>
 			</div>

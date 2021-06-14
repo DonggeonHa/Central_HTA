@@ -20,8 +20,8 @@
 		</div>
 		<div class="row mb-3">
 			<div class="col-6">
-				<div class="border p-2 bg-light">
-					<form method="post" action="login.jps">
+				<div class="border p-2 bg-light text-center">
+					<form method="post" id="loginForm">
 						<div class="mb-3">
 							<label class="form-label">아이디</label>
 							<input type="text" class="form-control" name="userid" />
@@ -41,8 +41,8 @@
 							</div>
 						</div>
 						<div class="mb-1 text-end">
-							<a href="/sample-school/index.jsp" class="btn btn-outline-primary">취소</a>
-							<button type="submit" class="btn btn-primary">로그인</button>
+							<a href="/index" class="btn btn-outline-primary">취소</a>
+							<button type="button" class="btn btn-primary" onclick="loginCheck()">로그인</button>
 						</div>
 					</form>
 				</div>
@@ -54,7 +54,25 @@
     		<span class="text-muted">중앙HTA 학원</span>
   		</div>
 	</footer>
-</div>    
+</div>
+<script type="text/javascript">
+
+	function loginCheck() {
+		var loginStudent = document.querySelector("#inlineRadio1").checked;
+		var loginProfessor = document.querySelector("#inlineRadio2").checked;
+		var login = document.getElementById("loginForm");
+		
+		if (loginStudent) {
+			login.action = "/loginStudent";
+		}
+		
+		if (loginProfessor) {
+			login.action = "/loginProfessor";
+		}
+		
+		login.submit();
+	}
+</script>    
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -1,5 +1,6 @@
 package com.sample.school.dao;
 
+import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 
 import com.sample.school.utils.MybatisUtils;
@@ -23,6 +24,16 @@ public class StudentDao {
 	 * @return 학생정보
 	 */
 	public Student getStudentById(String studentId) {
-		return null;
+		SqlSession session = sqlSessionFactory.openSession();
+		Student student = session.selectOne("getStudentById", studentId);
+		session.close();
+		
+		return student;
+	}
+	
+	public void insertStudent(Student student) {
+		SqlSession session = sqlSessionFactory.openSession(true);
+		session.insert("insertStudent", student);
+		session.close();
 	}
 }
