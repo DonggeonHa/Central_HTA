@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="departments">
+	
+	<select id="getAllDepartments" resultType="com.sample.vo.Department">
+		SELECT
+			department_id as id,
+			department_name as name
+		FROM
+			departments
+		WHERE
+			manager_id IS NOT NULL
+	</select>
+	
+	
+	
+</mapper>
