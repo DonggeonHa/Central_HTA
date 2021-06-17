@@ -63,10 +63,6 @@
 				<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe" />
 				<property name="username" value="hr" />
 				<property name="password" value="zxcv1234" />
-<!-- 				<property name="url" value="jdbc:oracle:thin:@dylan?TNS_ADMIN=D:\workspace\CloudDB\Wallet_dylan" /> -->
-<!-- 				<property name="url" value="jdbc:oracle:thin:@(DESCRIPTION=(ADDRESS=(HOST=adb.ap-seoul-1.oraclecloud.com)(PORT=1521)(PROTOCOL=tcp))(CONNECT_DATA=(SERVICE_NAME=PDB1.gbc047794fec9fa_dylan_medium.adb.oraclecloud.com)))" /> -->
-<!-- 				<property name="username" value="ADMIN" /> -->
-<!-- 				<property name="password" value="Donggeon927(" /> -->
 			</dataSource>
 		</environment>
 	</environments>

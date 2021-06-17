@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="professors">
+	<select id="getProfessorById" parameterType="string" resultType="com.sample.school.vo.Professor">
+		SELECT
+			professor_id as id,
+			professor_password as password,
+			professor_name as name,
+			professor_position as position,
+			department_no as departmentNo,
+			professor_created_date as createdDate
+		FROM
+			sample_school_professors
+		WHERE
+			professor_id = #{value}
+	</select>
+</mapper>
