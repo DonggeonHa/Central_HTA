@@ -67,7 +67,8 @@
 			// p9를 선택하는 선택자
 			$('.inner-box p:first').css('border', '3px solid red');
 			// p3, p7를 선택하는 선택자
-			$('#box-1 p:eq(2), #box-2 p:eq(2)').css('border', '2px solid orange');
+			// $('.container > div > p:nth-child(3)').css('border', '2px solid orange');
+			$('#box-1 > p:eq(2), #box-2 > p:eq(2)').css('border', '2px solid orange');
 		</script>
 	</body>
 </html>
