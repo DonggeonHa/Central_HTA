@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="boards">
+	
+	<insert id="insertBoard" parameterType="com.sample.board.vo.Board">
+		insert into sample_mvc_boards
+		(board_no, board_title, board_content, user_no)
+		values
+		(mvc_board_seq.nextval, #{title}, #{content}, #{userNo})
+	</insert>
+	
+	<select id="getTotalRows" resultType="int">
+		select
+			count(*)
+		from
+			sample_mvc_boards
+		where
+			board_deleted = 'N'
+	</select>
+	
+	<select id="getBoards" parameterType="map" resultType="com.sample.board.dto.BoardDto">
+		select
+			A.board_no as no,
+			A.board_title as title,
+			A.board_content as content,
+			A.user_no as userNo,
+			B.user_id as userId,
+			B.user_name as userName,
+			A.board_view_count as viewCount,
+			A.board_total_comment_count as totalCommentCount,
+			A.board_deleted as deleted,
+			A.board_deleted_date as deletedDate,
+			A.board_updated_date as updatedDate,
+			A.board_created_date as createdDate
+		from (
+			select 
+				row_number() over (order by board_no desc) rn,
+				board_no,
+				board_title,
+				board_content,
+				user_no,
+				board_view_count,
+				board_total_comment_count,
+				board_deleted,
+				board_deleted_date,
+				board_updated_date,
+				board_created_date
+			from
+				sample_mvc_boards
+			where
+				board_deleted = 'N'
+		) A, sample_mvc_users B
+		where
+			A.user_no = B.user_no
+			and A.rn between #{beginIndex} and #{endIndex}
+	</select>
+	
+	<select id="getBoardDetailByNo" parameterType="int" resultType="com.sample.board.dto.BoardDto">
+		select
+			A.board_no as no,
+			A.board_title as title,
+			A.board_content as content,
+			A.user_no as userNo,
+			B.user_id as userId,
+			B.user_name as userName,
+			A.board_view_count as viewCount,
+			A.board_total_comment_count as totalCommentCount,
+			A.board_deleted as deleted,
+			A.board_deleted_date as deletedDate,
+			A.board_updated_date as updatedDate,
+			A.board_created_date as createdDate
+		from
+			sample_mvc_boards A, sample_mvc_users B
+		where
+			A.user_no = B.user_no
+			and A.board_no = #{value}
+	</select>
+	
+	<select id="getBoardByNo" parameterType="int" resultType="com.sample.board.vo.Board">
+		select 
+			board_no as no,
+			board_title as title,
+			board_content as content,
+			user_no as userNo,
+			board_view_count as viewCount,
+			board_total_comment_count as totalCommentCount,
+			board_deleted as deleted,
+			board_deleted_date as deletedDate,
+			board_updated_date as updatedDate,
+			board_created_date as createdDate
+		from
+			sample_mvc_boards
+		where
+			board_no = ${value}
+	</select>
+	
+	<update id="updateBoard" parameterType="com.sample.board.vo.Board">
+		update
+			sample_mvc_boards
+		set
+			board_title = #{title},
+			board_content = #{content},
+			board_view_count = #{viewCount},
+			board_total_comment_count = #{totalCommentCount},
+			board_deleted = #{deleted},
+			board_deleted_date = #{deletedDate},
+			board_updated_date = #{updatedDate}
+		where
+			board_no = #{no}
+	</update>
+</mapper>

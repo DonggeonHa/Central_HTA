@@ -1,0 +1,38 @@
+create table sample_mvc_users (
+    user_no number(8) constraint mvc_user_no_pk primary key,
+    user_id varchar2(50) constraint mvc_user_id_uk unique,
+    user_password char(64) not null,
+    user_name varchar2(50) not null,
+    user_deleted char(1) default 'N',
+    user_deleted_date date,
+    user_updated_date date,
+    user_created_date date default sysdate
+);
+
+create table sample_mvc_boards (
+    board_no number(8) constraint mvc_board_no_pk primary key,
+    board_title varchar2(255) not null,
+    board_content clob not null,
+    user_no number(8) constraint mvc_board_user_no_fk references sample_mvc_users (user_no),
+    board_view_count number(8) default 0,
+    board_total_comment_count number(8) default 0,
+    board_deleted char(1) default 'N',
+    board_deleted_date date,
+    board_updated_date date,
+    board_created_date date default sysdate
+);
+
+create table sample_mvc_comments (
+    comment_no number(8) constraint mvc_comment_no_pk primary key,
+    comment_content varchar2(100) not null,
+    board_no number(8) constraint mvc_comment_board_no_fk references sample_mvc_boards (board_no),
+    user_no number(8) constraint mvc_comment_user_no_fk references sample_mvc_users (user_no),
+    comment_deleted char(1) default 'N',
+    comment_deleted_date date,
+    comment_updated_date date,
+    comment_created_date date default sysdate
+);
+
+create sequence mvc_user_seq nocache;
+create sequence mvc_board_seq nocache;
+create sequence mvc_comment_seq nocache;
