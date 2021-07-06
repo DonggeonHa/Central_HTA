@@ -1,0 +1,15 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- 
+		스프링 컨테이너가 생성할 빈을 등록한다
+	-->
+	
+	<!-- 
+		<bean /> 태그는 새로운 객체(빈)를 스프링 컨테이너가 생성하게 하는 태그다.
+		id는 생성된 객체를 식별하는 식별자다.
+		class는 생성할 객체의 완전한 클래스명이다.
+	-->
+	<bean id="h" class="com.sample.Hello"></bean>
+</beans>
